@@ -1,3 +1,7 @@
+// ==========================================
+// FIREBASE CONFIGURATION
+// ==========================================
+
 let db = null;
 
 const firebaseConfig = {
@@ -9,23 +13,34 @@ const firebaseConfig = {
     appId: "1:419036618237:web:a2796ae36fdc9eeea64d94"
 };
 
+
+// ==========================================
+// INITIALIZE FIREBASE
+// ==========================================
+
 try {
 
     if (typeof firebase === "undefined") {
-        throw new Error("Firebase SDK was not loaded.");
+        throw new Error("Firebase SDK is not loaded.");
     }
 
+    // Firebase ko sirf ek baar initialize karo
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
 
+    // Firestore database
     db = firebase.firestore();
 
-    console.log("Firebase initialized successfully.");
+    console.log("✅ Firebase connected successfully.");
+    console.log("✅ Firestore is ready.");
 
 } catch (error) {
 
-    console.error("Firebase initialization failed:", error);
+    console.error(
+        "❌ Firebase initialization failed:",
+        error
+    );
 
     db = null;
 }
