@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -12,7 +13,8 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, sans-serif;
         }
 
         body {
@@ -415,28 +417,38 @@
 
     <!-- SCREEN 1 -->
     <div id="role-screen" class="screen">
-        <h1 class="main-title">Cyber Hygiene Assessment</h1>
+
+        <h1 class="main-title">
+            Cyber Hygiene Assessment
+        </h1>
 
         <p class="subtitle">
             Welcome! Please select your role to check your secure presence.
         </p>
 
         <div class="role-grid">
-            <button onclick="selectRole('Student')" class="btn btn-blue">
+
+            <button onclick="selectRole('Student')"
+                    class="btn btn-blue">
                 👨‍🎓 Student
             </button>
 
-            <button onclick="selectRole('Faculty')" class="btn btn-emerald">
+            <button onclick="selectRole('Faculty')"
+                    class="btn btn-emerald">
                 👩‍🏫 Faculty
             </button>
+
         </div>
 
         <div class="admin-link-wrapper">
+
             <button onclick="showScreen('admin-login-screen')"
                     class="btn btn-dark-outline">
                 🔑 Admin Login
             </button>
+
         </div>
+
     </div>
 
 
@@ -444,23 +456,37 @@
     <div id="profile-screen" class="screen hidden">
 
         <div class="screen-header">
-            <h2>Step 1: Profile Setup</h2>
-            <span id="role-badge" class="badge">Student</span>
+
+            <h2>
+                Step 1: Profile Setup
+            </h2>
+
+            <span id="role-badge"
+                  class="badge">
+                Student
+            </span>
+
         </div>
 
         <div class="form-group">
-            <label for="username">Full Name</label>
+
+            <label for="username">
+                Full Name
+            </label>
 
             <input
                 type="text"
                 id="username"
                 placeholder="Enter your name"
                 autocomplete="name">
+
         </div>
 
-        <button onclick="nextToPassword()" class="btn btn-gradient">
+        <button onclick="nextToPassword()"
+                class="btn btn-gradient">
             Next: Password Strength ➡️
         </button>
+
     </div>
 
 
@@ -468,18 +494,27 @@
     <div id="password-screen" class="screen hidden">
 
         <div class="screen-header">
-            <h2>Step 2: Password Tester</h2>
-            <span class="badge">Security</span>
+
+            <h2>
+                Step 2: Password Tester
+            </h2>
+
+            <span class="badge">
+                Security
+            </span>
+
         </div>
 
         <p class="subtitle">
-            Test a password locally. Your password is not stored in the
-            assessment results.
+            Test a password locally. Your password is not stored
+            in the assessment results.
         </p>
 
         <div class="form-group">
 
-            <label for="password">Test a Password</label>
+            <label for="password">
+                Test a Password
+            </label>
 
             <input
                 type="password"
@@ -489,17 +524,22 @@
                 autocomplete="new-password">
 
             <div class="meter-bg">
+
                 <div id="strength-bar"></div>
+
             </div>
 
             <p id="strength-text">
                 Enter password to test strength
             </p>
+
         </div>
 
-        <button onclick="nextToTracker()" class="btn btn-gradient">
+        <button onclick="nextToTracker()"
+                class="btn btn-gradient">
             Next: Call Tracker ➡️
         </button>
+
     </div>
 
 
@@ -507,8 +547,15 @@
     <div id="tracker-screen" class="screen hidden">
 
         <div class="screen-header">
-            <h2>Step 3: Spam Call Analysis</h2>
-            <span class="badge">Safety</span>
+
+            <h2>
+                Step 3: Spam Call Analysis
+            </h2>
+
+            <span class="badge">
+                Safety
+            </span>
+
         </div>
 
         <p class="subtitle">
@@ -518,7 +565,9 @@
 
         <div class="form-group">
 
-            <label for="spam-phone">Unknown Phone Number</label>
+            <label for="spam-phone">
+                Unknown Phone Number
+            </label>
 
             <input
                 type="tel"
@@ -532,37 +581,46 @@
                 🔍 Check Number
             </button>
 
-            <div id="spam-result" class="hidden"></div>
+            <div id="spam-result"
+                 class="hidden">
+            </div>
+
         </div>
 
-        <button onclick="nextToQuiz()" class="btn btn-gradient">
+        <button onclick="nextToQuiz()"
+                class="btn btn-gradient">
             Next: Start Quiz 🧠
         </button>
+
     </div>
 
 
     <!-- SCREEN 5 -->
-    <div
-        id="quiz-screen"
-        class="screen hidden"
-        style="max-height:70vh; overflow-y:auto; padding-right:5px;">
+    <div id="quiz-screen"
+         class="screen hidden"
+         style="max-height:70vh; overflow-y:auto; padding-right:5px;">
 
-        <div
-            class="screen-header"
-            style="position:sticky; top:0; background:#1e293b; padding-top:5px; z-index:10;">
+        <div class="screen-header"
+             style="position:sticky;
+                    top:0;
+                    background:#1e293b;
+                    padding-top:5px;
+                    z-index:10;">
 
-            <h2>Step 4: Awareness Test</h2>
+            <h2>
+                Step 4: Awareness Test
+            </h2>
 
-            <span
-                class="badge"
-                style="background:#6b21a8; color:#e9d5ff;">
+            <span class="badge"
+                  style="background:#6b21a8;
+                         color:#e9d5ff;">
                 15 Questions
             </span>
+
         </div>
 
-        <div
-            id="all-questions-container"
-            style="margin-top:15px;">
+        <div id="all-questions-container"
+             style="margin-top:15px;">
         </div>
 
         <button
@@ -577,15 +635,19 @@
 
 
     <!-- SCREEN 6 -->
-    <div id="admin-login-screen" class="screen hidden">
+    <div id="admin-login-screen"
+         class="screen hidden">
 
-        <h2
-            style="text-align:center; color:#fbbf24; margin-bottom:15px;">
+        <h2 style="text-align:center;
+                   color:#fbbf24;
+                   margin-bottom:15px;">
             Admin Authentication
         </h2>
 
-        <p
-            style="text-align:center; color:#94a3b8; font-size:12px; margin-bottom:15px;">
+        <p style="text-align:center;
+                  color:#94a3b8;
+                  font-size:12px;
+                  margin-bottom:15px;">
             Enter the administrator access code.
         </p>
 
@@ -594,7 +656,8 @@
             id="admin-pass"
             placeholder="Enter Secret Code"
             autocomplete="current-password"
-            style="width:100%; margin-bottom:15px;">
+            style="width:100%;
+                   margin-bottom:15px;">
 
         <div style="display:flex; gap:10px;">
 
@@ -613,14 +676,14 @@
             </button>
 
         </div>
+
     </div>
 
 
     <!-- SCREEN 7 -->
-    <div
-        id="admin-dashboard-screen"
-        class="screen hidden"
-        style="width:100%;">
+    <div id="admin-dashboard-screen"
+         class="screen hidden"
+         style="width:100%;">
 
         <div class="screen-header">
 
@@ -650,6 +713,7 @@
             <table>
 
                 <thead>
+
                     <tr>
                         <th>Name</th>
                         <th>Role</th>
@@ -658,6 +722,7 @@
                         <th>Quiz</th>
                         <th>Date</th>
                     </tr>
+
                 </thead>
 
                 <tbody id="dashboard-body">
@@ -687,7 +752,8 @@
 
 
     <!-- SCREEN 8 -->
-    <div id="result-screen" class="screen hidden">
+    <div id="result-screen"
+         class="screen hidden">
 
         <h2 style="text-align:center;">
             Assessment Complete 🎉
@@ -712,12 +778,6 @@
      * ==========================================
      * CONFIGURATION
      * ==========================================
-     *
-     * IMPORTANT:
-     * This admin password is visible in browser JavaScript.
-     * It is NOT suitable for production authentication.
-     *
-     * Change it before using this demo.
      */
 
     const ADMIN_PASSWORD = "admin123";
@@ -920,13 +980,15 @@
 
     function showScreen(screenId) {
 
-        const screens = document.querySelectorAll(".screen");
+        const screens =
+            document.querySelectorAll(".screen");
 
         screens.forEach(screen => {
             screen.classList.add("hidden");
         });
 
-        const target = document.getElementById(screenId);
+        const target =
+            document.getElementById(screenId);
 
         if (target) {
             target.classList.remove("hidden");
@@ -949,9 +1011,11 @@
 
         currentRole = role;
 
-        document.getElementById("role-badge").textContent = role;
+        document.getElementById("role-badge")
+            .textContent = role;
 
-        document.getElementById("username").value = "";
+        document.getElementById("username")
+            .value = "";
 
         showScreen("profile-screen");
     }
@@ -1004,6 +1068,7 @@
     function calculatePasswordStrength(password) {
 
         if (!password) {
+
             return {
                 score: 0,
                 label: "Not tested",
@@ -1040,7 +1105,7 @@
         if (score <= 2) {
 
             return {
-                score,
+                score: score,
                 label: "Weak",
                 color: "#ef4444"
             };
@@ -1048,7 +1113,7 @@
         } else if (score <= 4) {
 
             return {
-                score,
+                score: score,
                 label: "Medium",
                 color: "#f59e0b"
             };
@@ -1056,7 +1121,7 @@
         } else {
 
             return {
-                score,
+                score: score,
                 label: "Strong",
                 color: "#10b981"
             };
@@ -1081,16 +1146,22 @@
         const percentage =
             Math.min((result.score / 6) * 100, 100);
 
-        bar.style.width = percentage + "%";
+        bar.style.width =
+            percentage + "%";
 
-        bar.style.background = result.color;
+        bar.style.background =
+            result.color;
 
         if (!password) {
 
             text.textContent =
                 "Enter password to test strength";
 
-            passwordStrength = "Not tested";
+            text.style.color =
+                "#94a3b8";
+
+            passwordStrength =
+                "Not tested";
 
             return;
         }
@@ -1121,7 +1192,8 @@
 
             alert("Please enter a password to test.");
 
-            document.getElementById("password").focus();
+            document.getElementById("password")
+                .focus();
 
             return;
         }
@@ -1134,15 +1206,13 @@
      * ==========================================
      * SPAM CHECK
      * ==========================================
-     *
-     * This is a basic educational heuristic.
-     * It does NOT query a real spam-number database.
      */
 
     function checkSpam() {
 
         const phone =
-            document.getElementById("spam-phone").value.trim();
+            document.getElementById("spam-phone")
+                .value.trim();
 
         const result =
             document.getElementById("spam-result");
@@ -1158,15 +1228,13 @@
             phone.replace(/\D/g, "");
 
         result.className = "";
-        result.classList.remove("hidden");
 
-        /*
-         * Basic checks
-         */
+        result.classList.remove("hidden");
 
         if (digits.length < 7) {
 
-            spamStatus = "Invalid / Suspicious";
+            spamStatus =
+                "Invalid / Suspicious";
 
             result.classList.add("danger");
 
@@ -1176,16 +1244,8 @@
             return;
         }
 
-        /*
-         * Repeated digits
-         */
-
         const repeated =
             /^(\d)\1+$/.test(digits);
-
-        /*
-         * Very common demo patterns
-         */
 
         const suspiciousPatterns = [
             "000000",
@@ -1202,7 +1262,8 @@
 
         if (suspicious) {
 
-            spamStatus = "Suspicious";
+            spamStatus =
+                "Suspicious";
 
             result.classList.add("danger");
 
@@ -1211,7 +1272,8 @@
 
         } else {
 
-            spamStatus = "No obvious warning";
+            spamStatus =
+                "No obvious warning";
 
             result.classList.add("safe");
 
@@ -1259,7 +1321,9 @@
                 "question-title";
 
             title.textContent =
-                (index + 1) + ". " + item.question;
+                (index + 1) +
+                ". " +
+                item.question;
 
             card.appendChild(title);
 
@@ -1312,11 +1376,17 @@
 
         let score = 0;
 
-        for (let i = 0; i < questions.length; i++) {
+        for (
+            let i = 0;
+            i < questions.length;
+            i++
+        ) {
 
             const selected =
                 document.querySelector(
-                    'input[name="question-' + i + '"]:checked'
+                    'input[name="question-' +
+                    i +
+                    '"]:checked'
                 );
 
             if (!selected) {
@@ -1368,26 +1438,24 @@
 
             role: currentRole,
 
-            passwordStrength: passwordStrength,
+            passwordStrength:
+                passwordStrength,
 
-            spamStatus: spamStatus,
+            spamStatus:
+                spamStatus,
 
-            quizScore: quizScore,
+            quizScore:
+                quizScore,
 
-            quizTotal: questions.length,
+            quizTotal:
+                questions.length,
 
-            percentage: percentage,
+            percentage:
+                percentage,
 
-            date: new Date().toLocaleString()
+            date:
+                new Date().toLocaleString()
         };
-
-
-        /*
-         * Save only assessment metadata.
-         *
-         * IMPORTANT:
-         * The actual password is never saved.
-         */
 
         saveAssessment(record);
 
@@ -1416,7 +1484,10 @@
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Error reading localStorage:",
+                error
+            );
 
             return [];
         }
@@ -1425,15 +1496,29 @@
 
     function saveAssessment(record) {
 
-        const assessments =
-            getAssessments();
+        try {
 
-        assessments.push(record);
+            const assessments =
+                getAssessments();
 
-        localStorage.setItem(
-            "cyberHygieneAssessments",
-            JSON.stringify(assessments)
-        );
+            assessments.push(record);
+
+            localStorage.setItem(
+                "cyberHygieneAssessments",
+                JSON.stringify(assessments)
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Error saving assessment:",
+                error
+            );
+
+            alert(
+                "Unable to save assessment data in this browser."
+            );
+        }
     }
 
 
@@ -1467,12 +1552,16 @@
         }
 
         result.innerHTML = `
+
             <div class="success-box">
 
-                <h3>Assessment Submitted Successfully</h3>
+                <h3>
+                    Assessment Submitted Successfully
+                </h3>
 
                 <p>
-                    Welcome, ${escapeHTML(record.name)}.
+                    Welcome,
+                    ${escapeHTML(record.name)}.
                 </p>
 
                 <div class="score-big">
@@ -1486,12 +1575,18 @@
                     </strong>
                 </p>
 
-                <p style="margin-top:10px;color:#94a3b8;">
-                    ${message}
+                <p style="
+                    margin-top:10px;
+                    color:#94a3b8;">
+                    ${escapeHTML(message)}
                 </p>
 
-                <p style="margin-top:10px;font-size:12px;color:#64748b;">
-                    Password strength: ${escapeHTML(record.passwordStrength)}
+                <p style="
+                    margin-top:10px;
+                    font-size:12px;
+                    color:#64748b;">
+                    Password strength:
+                    ${escapeHTML(record.passwordStrength)}
                 </p>
 
             </div>
@@ -1510,23 +1605,31 @@
     function loginAdmin() {
 
         const password =
-            document.getElementById("admin-pass").value;
+            document.getElementById("admin-pass")
+                .value;
 
         if (password === ADMIN_PASSWORD) {
 
-            document.getElementById("admin-pass").value = "";
+            document.getElementById("admin-pass")
+                .value = "";
 
             loadDashboard();
 
-            showScreen("admin-dashboard-screen");
+            showScreen(
+                "admin-dashboard-screen"
+            );
 
         } else {
 
-            alert("❌ Incorrect admin password.");
+            alert(
+                "❌ Incorrect admin password."
+            );
 
-            document.getElementById("admin-pass").value = "";
+            document.getElementById("admin-pass")
+                .value = "";
 
-            document.getElementById("admin-pass").focus();
+            document.getElementById("admin-pass")
+                .focus();
         }
     }
 
@@ -1543,30 +1646,36 @@
             getAssessments();
 
         const body =
-            document.getElementById("dashboard-body");
+            document.getElementById(
+                "dashboard-body"
+            );
 
         const summary =
-            document.getElementById("dashboard-summary");
+            document.getElementById(
+                "dashboard-summary"
+            );
 
         body.innerHTML = "";
 
         if (assessments.length === 0) {
 
             body.innerHTML = `
+
                 <tr>
+
                     <td colspan="6">
+
                         <div class="empty-state">
                             No assessment records found.
                         </div>
+
                     </td>
+
                 </tr>
+
             `;
 
         } else {
-
-            /*
-             * Newest first
-             */
 
             assessments
                 .slice()
@@ -1593,12 +1702,18 @@
                             ${escapeHTML(record.role)}
                         </td>
 
-                        <td class="${getStrengthClass(record.passwordStrength)}">
-                            ${escapeHTML(record.passwordStrength)}
+                        <td class="${getStrengthClass(
+                            record.passwordStrength
+                        )}">
+                            ${escapeHTML(
+                                record.passwordStrength
+                            )}
                         </td>
 
                         <td>
-                            ${escapeHTML(record.spamStatus)}
+                            ${escapeHTML(
+                                record.spamStatus
+                            )}
                         </td>
 
                         <td class="${scoreClass}">
@@ -1609,6 +1724,7 @@
                         <td>
                             ${escapeHTML(record.date)}
                         </td>
+
                     `;
 
                     body.appendChild(row);
@@ -1617,7 +1733,7 @@
 
 
         /*
-         * Dashboard summary
+         * Dashboard Summary
          */
 
         const total =
@@ -1639,12 +1755,14 @@
 
         const students =
             assessments.filter(
-                item => item.role === "Student"
+                item =>
+                    item.role === "Student"
             ).length;
 
         const faculty =
             assessments.filter(
-                item => item.role === "Faculty"
+                item =>
+                    item.role === "Faculty"
             ).length;
 
         summary.innerHTML = `
@@ -1675,7 +1793,9 @@
                         color:#94a3b8;">
                         TOTAL
                     </div>
+
                 </div>
+
 
                 <div style="
                     background:#0f172a;
@@ -1696,7 +1816,9 @@
                         color:#94a3b8;">
                         AVG SCORE
                     </div>
+
                 </div>
+
 
                 <div style="
                     background:#0f172a;
@@ -1717,12 +1839,19 @@
                         color:#94a3b8;">
                         STUDENT / FACULTY
                     </div>
+
                 </div>
 
             </div>
         `;
     }
 
+
+    /*
+     * ==========================================
+     * PASSWORD STRENGTH CLASS
+     * ==========================================
+     */
 
     function getStrengthClass(strength) {
 
@@ -1765,7 +1894,9 @@
 
         loadDashboard();
 
-        alert("All assessment data has been cleared.");
+        alert(
+            "All assessment data has been cleared."
+        );
     }
 
 
@@ -1794,4 +1925,10 @@
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039
+            .replace(/'/g, "&#039;");
+    }
+
+</script>
+
+</body>
+</html>
