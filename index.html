@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cyber Hygiene Portal</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Core Firebase SDKs loaded securely -->
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+</head>
+<body>
+
+    <!-- MAIN APP CONTAINER -->
+    <div class="app-card">
+        
+        <!-- SCREEN 1: ROLE SELECTION & ADMIN LOGIN -->
+        <div id="role-screen" class="screen">
+            <h1 class="main-title">Cyber Hygiene Assessment</h1>
+            <p class="subtitle">Welcome! Please select your role to check your secure presence.</p>
+            
+            <div class="role-grid">
+                <button onclick="selectRole('Student')" class="btn btn-blue">👨‍🎓 Student</button>
+                <button onclick="selectRole('Faculty')" class="btn btn-emerald">👩‍🏫 Faculty</button>
+            </div>
+
+            <div class="admin-link-wrapper">
+                <button onclick="showScreen('admin-login-screen')" class="btn btn-dark-outline">🔑 Admin Login</button>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: PROFILE SETUP (NAME ONLY) -->
+        <div id="profile-screen" class="screen hidden">
+            <div class="screen-header">
+                <h2>Step 1: Profile Setup</h2>
+                <span id="role-badge" class="badge">Student</span>
+            </div>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="username" placeholder="Enter your name">
+            </div>
+            <button onclick="nextToPassword()" class="btn btn-gradient">Next: Password Strength ➡️</button>
+        </div>
+
+        <!-- SCREEN 3: PASSWORD STRENGTH CHECKER -->
+        <div id="password-screen" class="screen hidden">
+            <h2>Step 2: Password Strength Tester</h2>
+            <p class="subtitle">Evaluate the security level of your custom passcode against dynamic vulnerabilities.</p>
+            <div class="form-group">
+                <label>Test a Password</label>
+                <input type="password" id="password" oninput="checkPasswordStrength()" placeholder="••••••••">
+                <div class="meter-bg">
+                    <div id="strength-bar"></div>
+                </div>
+                <p id="strength-text">Enter password to test strength</p>
+            </div>
+            <button onclick="nextToTracker()" class="btn btn-gradient">Next: Call Tracker ➡️</button>
+        </div>
+
+        <!-- SCREEN 4: CALL TRACKER & SPAM DETECTOR -->
+        <div id="tracker-screen" class="screen hidden">
+            <h2>Step 3: Spam Call Analysis</h2>
+            <p class="subtitle">Identify whether an unknown call or message is a potential phishing scam.</p>
+            <div class="form-group">
+                <input type="tel" id="spam-phone" placeholder="Enter Unknown Phone Number">
+                <button onclick="checkSpam()" class="btn btn-gray" style="margin-top: 10px;">🔍 Check Number</button>
+                <div id="spam-result" class="hidden"></div>
+            </div>
+            <button onclick="nextToQuiz()" class="btn btn-gradient">Next: Start Quiz 🧠</button>
+        </div>
+
+        <!-- SCREEN 5: ALL 15 QUIZ QUESTIONS ON ONE PAGE (Scrollable) -->
+        <div id="quiz-screen" class="screen hidden" style="max-height: 70vh; overflow-y: auto; padding-right: 5px;">
+            <div class="screen-header" style="position: sticky; top: 0; background: #1e293b; padding-top: 5px; z-index: 10;">
+                <h2>Step 4: Awareness Test</h2>
+                <span class="badge" style="background: #6b21a8; color: #e9d5ff;">15 Questions</span>
+            </div>
+            <div id="all-questions-container" style="margin-top: 15px;"></div>
+            <button id="submit-btn" class="btn btn-red" onclick="submitFinalData()" style="margin-top: 20px;">🔒 SUBMIT ASSESSMENT</button>
+        </div>
+
+        <!-- SCREEN 6: SECURED ADMIN LOGIN -->
+        <div id="admin-login-screen" class="screen hidden">
+            <h2 style="text-align: center; color: #fbbf24; margin-bottom: 15px;">Admin Authentication</h2>
+            <input type="password" id="admin-pass" placeholder="Enter Secret Code" style="width: 100%; margin-bottom: 15px;">
+            <div style="display: flex; gap: 10px;">
+                <button onclick="showScreen('role-screen')" class="btn btn-gray" style="width: 50%;">Cancel</button>
+                <button onclick="loginAdmin()" class="btn btn-amber" style="width: 50%;">Unlock</button>
+            </div>
+        </div>
+
+        <!-- SCREEN 7: LIVE MASTER DASHBOARD -->
+        <div id="admin-dashboard-screen" class="screen hidden" style="width: 100%;">
+            <div class="screen-header">
+                <h2 style="color: #fbbf24;">📊 Master Dashboard</h2>
+                <button onclick="location.reload()" style="background: rgba(220,38,38,0.2); color: #f87171; border: 1px solid #dc2626; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;">Logout</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Password</th>
+                            <th>Spam Check</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashboard-rows">
+                        <!-- Responses saved permanently in firestore will render here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts linked in correct sequence to prevent CORS freeze -->
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
