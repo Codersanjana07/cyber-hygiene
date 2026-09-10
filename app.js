@@ -1,230 +1,235 @@
-/* =========================================================
-   CYBER HYGIENE PORTAL - APP.JS
-   ========================================================= */
+// ==========================================
+// CYBER HYGIENE ASSESSMENT
+// APP.JS
+// ==========================================
+
+
+// ==========================================
+// USER DATA
+// ==========================================
 
 let userData = {
     name: "",
     role: "",
-    passwordStrength: "Weak",
-    spamNumber: "None",
-    score: 0
+    passwordStrength: "Not Checked",
+    spamStatus: "Not Checked",
+    score: 0,
+    rawScore: 0
 };
 
+
+// ==========================================
+// ADMIN CODE
+// ==========================================
+
 const ADMIN_CODE = "ADMIN123";
+
+
+// ==========================================
+// QUIZ QUESTIONS
+// ==========================================
 
 const quizQuestions = [
 
     {
-        q: "What is the best practice for creating a strong password?",
-        o: [
-            "Using your birthdate",
-            "Mixing uppercase, lowercase, numbers, and symbols",
-            "Reusing your email password",
-            "Keeping it short"
+        question: "What makes a password stronger?",
+        options: [
+            "Using your name",
+            "Using a long unique password",
+            "Using 123456",
+            "Using your birthday"
         ],
-        a: 1
+        answer: 1
     },
 
     {
-        q: "What does Two-Factor Authentication (2FA) do?",
-        o: [
-            "Asks for password twice",
-            "Adds a second layer of security via OTP/App",
-            "Speeds up login process",
-            "Deletes data automatically"
+        question: "What should you do with a suspicious email link?",
+        options: [
+            "Click immediately",
+            "Forward it to everyone",
+            "Avoid clicking and verify it",
+            "Reply with your password"
         ],
-        a: 1
+        answer: 2
     },
 
     {
-        q: "You receive an urgent email from your bank asking for UPI PIN. What should you do?",
-        o: [
-            "Reply with the PIN immediately",
-            "Ignore and delete the email",
-            "Forward to friends",
-            "Call the sender back"
+        question: "What does 2FA provide?",
+        options: [
+            "An additional security layer",
+            "Free internet",
+            "Faster downloads",
+            "More storage"
         ],
-        a: 1
+        answer: 0
     },
 
     {
-        q: "Which network is safest for online banking?",
-        o: [
-            "Public Railway Wi-Fi",
-            "Mall Free Wi-Fi",
-            "Secured Home Wi-Fi / Mobile Data",
-            "Any Open Network"
+        question: "Should you share your password with friends?",
+        options: [
+            "Yes",
+            "Only online",
+            "No",
+            "Always"
         ],
-        a: 2
+        answer: 2
     },
 
     {
-        q: "What is 'Phishing'?",
-        o: [
-            "A type of cyber attack to steal sensitive data",
-            "Catching fish online",
-            "Updating OS software",
-            "Speeding up internet connection"
+        question: "Which is safer on public Wi-Fi?",
+        options: [
+            "Entering sensitive information everywhere",
+            "Using trusted secure connections",
+            "Sharing passwords",
+            "Disabling all security"
         ],
-        a: 0
+        answer: 1
     },
 
     {
-        q: "How often should you update your smartphone operating system?",
-        o: [
+        question: "What should you do if an account is compromised?",
+        options: [
+            "Ignore it",
+            "Change password and secure the account",
+            "Share the password",
+            "Delete your computer"
+        ],
+        answer: 1
+    },
+
+    {
+        question: "Why are software updates important?",
+        options: [
+            "They can fix security vulnerabilities",
+            "They remove the internet",
+            "They reduce security",
+            "They delete all files"
+        ],
+        answer: 0
+    },
+
+    {
+        question: "What is phishing?",
+        options: [
+            "A type of cyber scam",
+            "A computer game",
+            "A password manager",
+            "An antivirus"
+        ],
+        answer: 0
+    },
+
+    {
+        question: "Where should sensitive files be stored?",
+        options: [
+            "Anywhere public",
+            "In a trusted secure location",
+            "On random websites",
+            "In public comments"
+        ],
+        answer: 1
+    },
+
+    {
+        question: "Should you verify unexpected payment requests?",
+        options: [
+            "Yes",
+            "No",
             "Never",
-            "Only when it stops working",
-            "As soon as updates are available",
-            "Once every two years"
+            "Only after paying"
         ],
-        a: 2
+        answer: 0
     },
 
     {
-        q: "What should you check before entering sensitive info on a website?",
-        o: [
-            "The website color",
-            "If the URL starts with 'https://' and has a lock icon",
-            "The number of images",
-            "If it loads fast"
+        question: "What is a good practice for passwords?",
+        options: [
+            "Reuse one password everywhere",
+            "Use unique passwords",
+            "Use only your name",
+            "Use only numbers"
         ],
-        a: 1
+        answer: 1
     },
 
     {
-        q: "What is the risk of using public USB charging stations?",
-        o: [
-            "Slow charging speed",
-            "Juice Jacking (Data theft/Malware installation)",
-            "Phone battery blast",
-            "No risk at all"
+        question: "What should you do before downloading unknown files?",
+        options: [
+            "Verify the source",
+            "Download immediately",
+            "Disable antivirus",
+            "Share it first"
         ],
-        a: 1
+        answer: 0
     },
 
     {
-        q: "If you back up your files to the cloud, you are protecting against:",
-        o: [
-            "Screen damage",
-            "Data loss from ransomware or hardware failure",
-            "High internet bills",
-            "Spam phone calls"
+        question: "Which information should you avoid sharing publicly?",
+        options: [
+            "Sensitive personal information",
+            "A favorite color",
+            "A hobby",
+            "A general interest"
         ],
-        a: 1
+        answer: 0
     },
 
     {
-        q: "What is a 'Trojan Horse' in cyber security?",
-        o: [
-            "A strong virus scanner",
-            "Malicious software disguised as legitimate software",
-            "A hardware component",
-            "A secure network cable"
+        question: "What is antivirus software used for?",
+        options: [
+            "Detecting and helping protect against malicious software",
+            "Increasing screen size",
+            "Making passwords public",
+            "Deleting the internet"
         ],
-        a: 1
+        answer: 0
     },
 
     {
-        q: "When sharing photos on social media, what hidden data can pose a privacy risk?",
-        o: [
-            "File size",
-            "Image resolution",
-            "EXIF data (including GPS location)",
-            "Color scheme"
+        question: "What is the safest response to an unexpected login alert?",
+        options: [
+            "Ignore it",
+            "Verify the activity and secure the account if needed",
+            "Share the alert publicly",
+            "Give someone your password"
         ],
-        a: 2
-    },
-
-    {
-        q: "What is the safest way to dispose of an old hard drive?",
-        o: [
-            "Throwing it in the trash bin",
-            "Physically destroying it or using data wiping software",
-            "Deleting all folders",
-            "Formatting it quickly once"
-        ],
-        a: 1
-    },
-
-    {
-        q: "Which of the following indicates a potential spam/phishing SMS?",
-        o: [
-            "A message from a known friend",
-            "An OTP you requested",
-            "Urgent warnings with suspicious short links claiming you won a lottery",
-            "A monthly electricity bill notification"
-        ],
-        a: 2
-    },
-
-    {
-        q: "What does a Firewall do?",
-        o: [
-            "Cools down the computer processor",
-            "Monitors and filters incoming and outgoing network traffic",
-            "Increases internet downloading speed",
-            "Deletes old files"
-        ],
-        a: 1
-    },
-
-    {
-        q: "Why should you avoid using the same password for all accounts?",
-        o: [
-            "It is hard to type",
-            "If one account is breached, hackers can access all your accounts",
-            "Websites do not allow it",
-            "It slows down the login process"
-        ],
-        a: 1
+        answer: 1
     }
 
 ];
 
 
-/* =========================================================
-   SCREEN MANAGEMENT
-   ========================================================= */
+// ==========================================
+// SHOW SECTION
+// ==========================================
 
-function showScreen(screenId) {
+function showSection(sectionId) {
 
-    const screens = [
+    const sections = [
         "home",
         "profile",
         "passwordScreen",
         "spamScreen",
         "quizScreen",
+        "resultScreen",
         "adminLogin",
-        "dashboard",
-        "resultScreen"
+        "dashboard"
     ];
 
-    screens.forEach(function(id) {
+    sections.forEach(function(id) {
 
-        const element = document.getElementById(id);
+        const section = document.getElementById(id);
 
-        if (element) {
-            element.classList.add("hidden");
+        if (section) {
+            section.classList.add("hidden");
         }
 
     });
 
-    const target = document.getElementById(screenId);
+    const target = document.getElementById(sectionId);
 
     if (target) {
         target.classList.remove("hidden");
-    }
-
-    const appContainer = document.getElementById("appContainer");
-
-    if (appContainer) {
-
-        if (screenId === "dashboard") {
-            appContainer.classList.add("wide-mode");
-        } else {
-            appContainer.classList.remove("wide-mode");
-        }
-
     }
 
     window.scrollTo({
@@ -234,976 +239,1286 @@ function showScreen(screenId) {
 }
 
 
-/* =========================================================
-   ROLE SELECTION
-   ========================================================= */
+// ==========================================
+// GO HOME
+// ==========================================
+
+function goHome() {
+    showSection("home");
+}
+
+
+// ==========================================
+// SELECT ROLE
+// ==========================================
 
 function selectRole(role) {
 
     userData.role = role;
 
-    const roleBadge = document.getElementById("roleBadge");
+    const roleBadge =
+        document.getElementById("roleBadge");
 
     if (roleBadge) {
-        roleBadge.innerText = role;
+        roleBadge.textContent = role;
     }
 
-    showScreen("profile");
+    const username =
+        document.getElementById("username");
+
+    if (username) {
+        username.value = "";
+    }
+
+    showSection("profile");
 }
 
 
-/* =========================================================
-   PROFILE
-   ========================================================= */
+// ==========================================
+// PROFILE → PASSWORD
+// ==========================================
 
 function nextToPassword() {
 
-    const usernameInput = document.getElementById("username");
+    const username =
+        document.getElementById("username");
 
-    const name = usernameInput
-        ? usernameInput.value.trim()
-        : "";
+    if (!username) {
+        return;
+    }
 
-    if (!name) {
+    const name =
+        username.value.trim();
 
-        alert("Please enter your name to proceed.");
+    if (name.length < 2) {
 
-        if (usernameInput) {
-            usernameInput.focus();
-        }
+        alert("Please enter your name.");
+
+        username.focus();
 
         return;
     }
 
     userData.name = name;
 
-    showScreen("passwordScreen");
+    showSection("passwordScreen");
 }
 
 
-/* =========================================================
-   PASSWORD STRENGTH
-   ========================================================= */
+// ==========================================
+// PASSWORD STRENGTH
+// ==========================================
 
 function checkPasswordStrength() {
 
-    const passInput = document.getElementById("password");
+    const passwordInput =
+        document.getElementById("password");
 
-    const pass = passInput
-        ? passInput.value
-        : "";
+    const result =
+        document.getElementById("passwordResult");
 
-    const bar = document.getElementById("strength-bar");
-    const txt = document.getElementById("strength-text");
+    if (!passwordInput || !result) {
+        return;
+    }
 
-    if (!pass.length) {
+    const password =
+        passwordInput.value;
 
-        if (bar) {
-            bar.style.width = "0%";
-        }
+    if (!password) {
 
-        if (txt) {
-            txt.innerText = "Enter password to test strength";
-        }
+        userData.passwordStrength =
+            "Not Checked";
 
-        userData.passwordStrength = "Weak";
+        result.innerHTML =
+            '<span class="error">Please enter a sample password.</span>';
 
         return;
     }
+
 
     let score = 0;
 
-    if (pass.length >= 8) {
+
+    if (password.length >= 8) {
         score++;
     }
 
-    if (/[A-Z]/.test(pass)) {
+    if (password.length >= 12) {
         score++;
     }
 
-    if (/[0-9]/.test(pass)) {
+    if (/[A-Z]/.test(password)) {
         score++;
     }
 
-    if (/[^A-Za-z0-9]/.test(pass)) {
+    if (/[a-z]/.test(password)) {
         score++;
     }
 
-    if (score <= 1) {
+    if (/[0-9]/.test(password)) {
+        score++;
+    }
 
-        if (bar) {
-            bar.style.width = "25%";
-            bar.style.backgroundColor = "#ef4444";
-        }
+    if (/[^A-Za-z0-9]/.test(password)) {
+        score++;
+    }
 
-        if (txt) {
-            txt.innerText = "🛑 Weak Password";
-        }
 
-        userData.passwordStrength = "Weak";
+    if (score >= 5) {
 
-    } else if (score <= 3) {
+        userData.passwordStrength = "Strong";
 
-        if (bar) {
-            bar.style.width = "50%";
-            bar.style.backgroundColor = "#eab308";
-        }
+        result.innerHTML =
+            '<span class="success">🟢 Strong password</span>';
 
-        if (txt) {
-            txt.innerText = "⚠️ Medium Password";
-        }
+    }
+
+    else if (score >= 3) {
 
         userData.passwordStrength = "Medium";
 
-    } else {
+        result.innerHTML =
+            '<span class="warning">🟡 Medium password</span>';
 
-        if (bar) {
-            bar.style.width = "100%";
-            bar.style.backgroundColor = "#10b981";
-        }
+    }
 
-        if (txt) {
-            txt.innerText = "✅ Strong Password";
-        }
+    else {
 
-        userData.passwordStrength = "Strong";
+        userData.passwordStrength = "Weak";
+
+        result.innerHTML =
+            '<span class="error">🔴 Weak password</span>';
+
     }
 }
 
 
-/* =========================================================
-   MOVE TO SPAM CHECK
-   ========================================================= */
+// ==========================================
+// PASSWORD → SPAM
+// ==========================================
 
-function nextToTracker() {
+function nextToSpam() {
 
-    const passInput = document.getElementById("password");
+    const passwordInput =
+        document.getElementById("password");
 
-    if (!passInput || !passInput.value.trim()) {
+    if (
+        !passwordInput ||
+        !passwordInput.value
+    ) {
 
-        alert("Please test a password first.");
+        alert(
+            "Please enter a sample password first."
+        );
 
         return;
     }
 
-    /*
-       Security:
-       The actual password is immediately removed from memory
-       after strength testing.
-    */
+    checkPasswordStrength();
 
-    passInput.value = "";
-
-    showScreen("spamScreen");
+    showSection("spamScreen");
 }
 
 
-/* =========================================================
-   SPAM CHECK
-   ========================================================= */
+// ==========================================
+// SPAM NUMBER CHECK
+// ==========================================
 
 function checkSpam() {
 
-    const phoneInput = document.getElementById("phone");
+    const phoneInput =
+        document.getElementById("phone");
 
-    const num = phoneInput
-        ? phoneInput.value.trim()
-        : "";
+    const result =
+        document.getElementById("spamResult");
 
-    if (!num) {
+    if (!phoneInput || !result) {
+        return;
+    }
 
-        alert("Please enter a phone number.");
+    const phone =
+        phoneInput.value.replace(/\D/g, "");
 
-        if (phoneInput) {
-            phoneInput.focus();
-        }
+
+    if (!phone) {
+
+        userData.spamStatus =
+            "Not Checked";
+
+        result.innerHTML =
+            '<span class="error">Please enter a phone number.</span>';
 
         return;
     }
 
-    const digitsOnly = num.replace(/\D/g, "");
 
-    const resultBox = document.getElementById("spamResult");
+    let suspicious = false;
 
-    if (!resultBox) {
-        return;
+
+    if (phone.length < 10) {
+        suspicious = true;
     }
 
-    resultBox.classList.remove("hidden");
+    if (/^(\d)\1+$/.test(phone)) {
+        suspicious = true;
+    }
 
-    /*
-       This is only a basic pattern check.
-       It is NOT a real telecom spam database lookup.
-    */
+    if (phone.includes("1234567890")) {
+        suspicious = true;
+    }
 
-    const repeatedDigits = /(\d)\1{4,}/.test(digitsOnly);
-    const invalidLength = digitsOnly.length < 10;
-    const suspiciousPrefix = digitsOnly.startsWith("140");
+    if (phone.includes("0987654321")) {
+        suspicious = true;
+    }
 
-    if (repeatedDigits || invalidLength || suspiciousPrefix) {
 
-        resultBox.className = "result danger";
+    if (suspicious) {
 
-        resultBox.innerText =
-            "🚨 Invalid / Suspicious Alert!";
+        userData.spamStatus =
+            "Suspicious";
 
-        userData.spamNumber =
-            "Invalid / Suspicious";
+        result.innerHTML =
+            '<span class="warning">⚠️ Suspicious pattern detected.</span>';
 
-    } else {
+    }
 
-        resultBox.className = "result safe";
+    else {
 
-        resultBox.innerText =
-            "✅ No obvious warning patterns detected.";
+        userData.spamStatus =
+            "No Suspicious Pattern";
 
-        userData.spamNumber =
-            "No obvious warning";
+        result.innerHTML =
+            '<span class="success">🟢 No suspicious pattern detected.</span>';
+
     }
 }
 
 
-/* =========================================================
-   QUIZ
-   ========================================================= */
+// ==========================================
+// SPAM → QUIZ
+// ==========================================
 
 function nextToQuiz() {
 
-    showScreen("quizScreen");
+    const phoneInput =
+        document.getElementById("phone");
 
-    const container =
-        document.getElementById("questions");
+    if (
+        !phoneInput ||
+        !phoneInput.value.trim()
+    ) {
 
-    if (!container) {
+        alert(
+            "Please enter a phone number first."
+        );
+
         return;
     }
 
-    container.innerHTML = "";
+    checkSpam();
 
-    quizQuestions.forEach(function(currentQ, qIdx) {
+    renderQuiz();
 
-        const qBlock =
-            document.createElement("div");
-
-        qBlock.className = "question";
-
-        const qTitle =
-            document.createElement("div");
-
-        qTitle.className = "question-title";
-
-        qTitle.innerText =
-            `${qIdx + 1}. ${currentQ.q}`;
-
-        qBlock.appendChild(qTitle);
-
-        currentQ.o.forEach(function(opt, oIdx) {
-
-            const label =
-                document.createElement("label");
-
-            label.className = "option";
-
-            const radio =
-                document.createElement("input");
-
-            radio.type = "radio";
-            radio.name = `question_${qIdx}`;
-            radio.value = oIdx;
-
-            label.appendChild(radio);
-            label.appendChild(
-                document.createTextNode(" " + opt)
-            );
-
-            qBlock.appendChild(label);
-        });
-
-        container.appendChild(qBlock);
-    });
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    showSection("quizScreen");
 }
 
 
-/* =========================================================
-   SUBMIT ASSESSMENT
-   ========================================================= */
+// ==========================================
+// RENDER QUIZ
+// ==========================================
 
-async function submitFinalData() {
+function renderQuiz() {
+
+    const questionsContainer =
+        document.getElementById("questions");
+
+    if (!questionsContainer) {
+        return;
+    }
+
+    questionsContainer.innerHTML = "";
+
+
+    quizQuestions.forEach(function(question, index) {
+
+        const questionBox =
+            document.createElement("div");
+
+        questionBox.className =
+            "question";
+
+
+        const title =
+            document.createElement("h3");
+
+        title.textContent =
+            (index + 1) +
+            ". " +
+            question.question;
+
+
+        questionBox.appendChild(title);
+
+
+        question.options.forEach(
+            function(option, optionIndex) {
+
+                const label =
+                    document.createElement("label");
+
+                label.className =
+                    "option";
+
+
+                const radio =
+                    document.createElement("input");
+
+                radio.type = "radio";
+
+                radio.name =
+                    "question_" + index;
+
+                radio.value =
+                    optionIndex;
+
+
+                label.appendChild(radio);
+
+                label.appendChild(
+                    document.createTextNode(
+                        option
+                    )
+                );
+
+
+                questionBox.appendChild(label);
+
+            }
+        );
+
+
+        questionsContainer.appendChild(
+            questionBox
+        );
+
+    });
+
+
+    updateProgress();
+}
+
+
+// ==========================================
+// QUIZ PROGRESS
+// ==========================================
+
+function updateProgress() {
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+    if (!progressBar) {
+        return;
+    }
+
+
+    let answered = 0;
+
+
+    quizQuestions.forEach(
+        function(question, index) {
+
+            const selected =
+                document.querySelector(
+                    'input[name="question_' +
+                    index +
+                    '"]:checked'
+                );
+
+            if (selected) {
+                answered++;
+            }
+
+        }
+    );
+
+
+    const percentage =
+        (answered /
+            quizQuestions.length) *
+        100;
+
+
+    progressBar.style.width =
+        percentage + "%";
+}
+
+
+// ==========================================
+// SUBMIT ASSESSMENT
+// ==========================================
+
+async function submitAssessment() {
 
     const submitButton =
         document.getElementById("submitBtn");
 
+
+    // Prevent double click
     if (submitButton) {
         submitButton.disabled = true;
-        submitButton.innerText = "Saving Assessment...";
+        submitButton.textContent =
+            "Saving...";
     }
 
-    try {
 
-        let calculatedScore = 0;
+    let rawScore = 0;
 
-        quizQuestions.forEach(function(currentQ, qIdx) {
 
-            const selected =
-                document.querySelector(
-                    `input[name="question_${qIdx}"]:checked`
-                );
+    // Check answers
+    for (
+        let i = 0;
+        i < quizQuestions.length;
+        i++
+    ) {
 
-            if (
-                selected &&
-                Number(selected.value) === currentQ.a
-            ) {
-                calculatedScore++;
-            }
-        });
-
-        const percentage =
-            Math.round(
-                (calculatedScore / quizQuestions.length) * 100
+        const selected =
+            document.querySelector(
+                'input[name="question_' +
+                i +
+                '"]:checked'
             );
 
-        userData.score = calculatedScore;
 
-        const recordData = {
-
-            name: userData.name,
-
-            role: userData.role,
-
-            passwordStrength:
-                userData.passwordStrength,
-
-            spamStatus:
-                userData.spamNumber,
-
-            score:
-                `${calculatedScore}/${quizQuestions.length} (${percentage}%)`,
-
-            rawScore:
-                calculatedScore,
-
-            timestamp:
-                new Date().toLocaleString(),
-
-            createdAt:
-                firebase.firestore.Timestamp.now()
-        };
-
-        let savedToCloud = false;
-
-        /*
-           Save to Firestore
-        */
-
-        if (
-            typeof db !== "undefined" &&
-            db !== null
-        ) {
-
-            try {
-
-                await db
-                    .collection("assessments")
-                    .add(recordData);
-
-                savedToCloud = true;
-
-                console.log(
-                    "Assessment saved to Firestore."
-                );
-
-            } catch (error) {
-
-                console.error(
-                    "Firestore save failed:",
-                    error
-                );
-
-            }
-        }
-
-        /*
-           Local backup if cloud save fails.
-        */
-
-        if (!savedToCloud) {
-
-            saveToBackup(recordData);
+        if (!selected) {
 
             alert(
-                "Cloud database is unavailable right now. " +
-                "Your result has been saved locally on this device."
+                "Please answer question " +
+                (i + 1) +
+                "."
             );
+
+
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent =
+                    "Submit Assessment";
+            }
+
+
+            return;
         }
 
-        showResultsPage(
-            calculatedScore,
-            percentage
+
+        if (
+            Number(selected.value) ===
+            quizQuestions[i].answer
+        ) {
+
+            rawScore++;
+
+        }
+
+    }
+
+
+    userData.rawScore =
+        rawScore;
+
+
+    userData.score =
+        Math.round(
+            (
+                rawScore /
+                quizQuestions.length
+            ) * 100
         );
 
-    } catch (error) {
+
+    // ======================================
+    // FIREBASE CHECK
+    // ======================================
+
+    if (!db) {
 
         console.error(
-            "Assessment error:",
-            error
+            "Firestore database is not available."
         );
+
 
         alert(
-            "Something went wrong while submitting the assessment."
+            "Firebase connected nahi hai. firebase.js check karo."
         );
 
-    } finally {
 
         if (submitButton) {
-
             submitButton.disabled = false;
-
-            submitButton.innerText =
-                "🔒 SUBMIT ASSESSMENT";
+            submitButton.textContent =
+                "Submit Assessment";
         }
+
+
+        return;
     }
-}
 
 
-/* =========================================================
-   LOCAL BACKUP
-   ========================================================= */
+    // ======================================
+    // DATA TO SAVE
+    // ======================================
+    //
+    // IMPORTANT:
+    // Real password kabhi save nahi hota.
+    // Sirf password strength save hoti hai.
+    //
 
-function saveToBackup(data) {
+    const record = {
+
+        name:
+            userData.name,
+
+        role:
+            userData.role,
+
+        passwordStrength:
+            userData.passwordStrength,
+
+        spamStatus:
+            userData.spamStatus,
+
+        rawScore:
+            userData.rawScore,
+
+        score:
+            userData.score,
+
+        timestamp:
+            new Date().toISOString(),
+
+        createdAt:
+            firebase.firestore
+                .FieldValue
+                .serverTimestamp()
+
+    };
+
 
     try {
 
-        const existing =
-            JSON.parse(
-                localStorage.getItem(
-                    "cyberHygieneRecords"
-                )
-            ) || [];
+        await db
+            .collection("assessments")
+            .add(record);
 
-        existing.push(data);
 
-        localStorage.setItem(
-            "cyberHygieneRecords",
-            JSON.stringify(existing)
+        console.log(
+            "✅ Assessment saved to Firestore."
         );
+
+
+        showResult();
+
 
     } catch (error) {
 
         console.error(
-            "Local backup failed:",
+            "❌ Firestore save error:",
             error
         );
+
+
+        alert(
+            "Data save nahi hua. Firebase Firestore check karo."
+        );
+
+
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent =
+                "Submit Assessment";
+        }
+
     }
 }
 
 
-/* =========================================================
-   RESULT
-   ========================================================= */
+// ==========================================
+// SHOW RESULT
+// ==========================================
 
-function showResultsPage(score, percent) {
+function showResult() {
 
     const finalScore =
         document.getElementById("finalScore");
 
     const finalScorePercent =
-        document.getElementById("finalScorePercent");
+        document.getElementById(
+            "finalScorePercent"
+        );
+
 
     if (finalScore) {
-        finalScore.innerText =
-            `${score}/${quizQuestions.length}`;
+
+        finalScore.textContent =
+            userData.rawScore +
+            "/" +
+            quizQuestions.length;
+
     }
+
+
+    let message = "";
+
+
+    if (userData.score >= 80) {
+
+        message =
+            "🟢 Excellent! You scored " +
+            userData.score +
+            "%. Your cyber hygiene awareness is strong.";
+
+    }
+
+    else if (userData.score >= 50) {
+
+        message =
+            "🟡 Good effort! You scored " +
+            userData.score +
+            "%. There are some areas you can improve.";
+
+    }
+
+    else {
+
+        message =
+            "🔴 You scored " +
+            userData.score +
+            "%. Keep learning and improving your cyber safety habits.";
+
+    }
+
 
     if (finalScorePercent) {
-        finalScorePercent.innerText =
-            `(${percent}%)`;
+
+        finalScorePercent.textContent =
+            message;
+
     }
 
-    showScreen("resultScreen");
+
+    showSection("resultScreen");
 }
 
 
-/* =========================================================
-   RESET TO HOME
-   ========================================================= */
+// ==========================================
+// RESET APP
+// ==========================================
 
-function resetFormToHome() {
+function resetApp() {
 
     userData = {
+
         name: "",
+
         role: "",
-        passwordStrength: "Weak",
-        spamNumber: "None",
-        score: 0
+
+        passwordStrength:
+            "Not Checked",
+
+        spamStatus:
+            "Not Checked",
+
+        score: 0,
+
+        rawScore: 0
+
     };
 
-    const fields = [
-        "username",
-        "password",
-        "phone",
-        "adminPassword"
-    ];
 
-    fields.forEach(function(id) {
+    const username =
+        document.getElementById(
+            "username"
+        );
 
-        const element =
-            document.getElementById(id);
+    const password =
+        document.getElementById(
+            "password"
+        );
 
-        if (element) {
-            element.value = "";
-        }
-    });
+    const phone =
+        document.getElementById(
+            "phone"
+        );
 
-    const strengthBar =
-        document.getElementById("strength-bar");
 
-    const strengthText =
-        document.getElementById("strength-text");
-
-    if (strengthBar) {
-        strengthBar.style.width = "0%";
+    if (username) {
+        username.value = "";
     }
 
-    if (strengthText) {
-        strengthText.innerText =
-            "Enter password to test strength";
+    if (password) {
+        password.value = "";
     }
+
+    if (phone) {
+        phone.value = "";
+    }
+
+
+    const passwordResult =
+        document.getElementById(
+            "passwordResult"
+        );
+
+    if (passwordResult) {
+
+        passwordResult.textContent =
+            "Start by entering a sample password.";
+
+    }
+
 
     const spamResult =
-        document.getElementById("spamResult");
+        document.getElementById(
+            "spamResult"
+        );
 
     if (spamResult) {
-        spamResult.className =
-            "result hidden";
 
-        spamResult.innerText = "";
+        spamResult.textContent =
+            "Enter a number to check.";
+
     }
 
+
     const questions =
-        document.getElementById("questions");
+        document.getElementById(
+            "questions"
+        );
 
     if (questions) {
         questions.innerHTML = "";
     }
 
-    showScreen("home");
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+    if (progressBar) {
+        progressBar.style.width = "0%";
+    }
+
+
+    showSection("home");
 }
 
 
-/* =========================================================
-   ADMIN LOGIN
-   ========================================================= */
+// ==========================================
+// ADMIN LOGIN
+// ==========================================
 
-function tryUnlockAdmin() {
+function openAdminLogin() {
 
-    const input =
-        document.getElementById("adminPassword");
+    const password =
+        document.getElementById(
+            "adminPassword"
+        );
 
-    const enteredCode =
-        input ? input.value : "";
+    const error =
+        document.getElementById(
+            "adminError"
+        );
 
-    if (!enteredCode) {
 
-        alert("Please enter the admin code.");
+    if (password) {
+        password.value = "";
+    }
+
+    if (error) {
+        error.textContent = "";
+    }
+
+
+    showSection("adminLogin");
+}
+
+
+// ==========================================
+// ADMIN UNLOCK
+// ==========================================
+
+async function tryUnlockAdmin() {
+
+    const password =
+        document.getElementById(
+            "adminPassword"
+        );
+
+    const error =
+        document.getElementById(
+            "adminError"
+        );
+
+
+    if (!password) {
+        return;
+    }
+
+
+    const code =
+        password.value.trim();
+
+
+    if (code !== ADMIN_CODE) {
+
+        if (error) {
+
+            error.textContent =
+                "❌ Invalid admin code.";
+
+        }
 
         return;
     }
 
-    if (enteredCode === ADMIN_CODE) {
 
-        if (input) {
-            input.value = "";
-        }
-
-        showScreen("dashboard");
-
-        loadAdminDashboard();
-
-    } else {
-
-        alert("❌ Incorrect admin code.");
-
-        if (input) {
-            input.value = "";
-            input.focus();
-        }
+    if (error) {
+        error.textContent = "";
     }
+
+
+    showSection("dashboard");
+
+
+    await loadDashboard();
 }
 
 
-/* =========================================================
-   ADMIN LOGOUT
-   ========================================================= */
+// ==========================================
+// LOAD DASHBOARD
+// ==========================================
 
-function adminLogout() {
+async function loadDashboard() {
 
-    const input =
-        document.getElementById("adminPassword");
-
-    if (input) {
-        input.value = "";
-    }
-
-    showScreen("home");
-}
-
-
-/* =========================================================
-   ADMIN DASHBOARD
-   ========================================================= */
-
-async function loadAdminDashboard() {
-
-    const tbody =
-        document.getElementById("dashboardBody");
+    const body =
+        document.getElementById(
+            "dashboardBody"
+        );
 
     const summary =
-        document.getElementById("summary");
+        document.getElementById(
+            "summary"
+        );
 
-    if (!tbody) {
+
+    if (!body) {
         return;
     }
 
-    tbody.innerHTML =
-        `<tr>
-            <td colspan="6" style="text-align:center;">
-                Loading cloud analytics...
+
+    body.innerHTML = `
+        <tr>
+            <td colspan="6" class="empty">
+                Loading records...
             </td>
-        </tr>`;
+        </tr>
+    `;
+
+
+    if (summary) {
+
+        summary.textContent =
+            "Loading analytics...";
+
+    }
+
+
+    if (!db) {
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    Firebase is not connected.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
 
     try {
 
-        let records = [];
+        const snapshot =
+            await db
+                .collection("assessments")
+                .get();
 
-        /*
-           Load Firestore records first.
-        */
 
-        if (
-            typeof db !== "undefined" &&
-            db !== null
-        ) {
+        const records = [];
 
-            try {
 
-                const snapshot =
-                    await db
-                        .collection("assessments")
-                        .orderBy("createdAt", "desc")
-                        .get();
+        snapshot.forEach(
+            function(doc) {
 
-                snapshot.forEach(function(doc) {
-
-                    const data = doc.data();
-
-                    records.push({
-                        id: doc.id,
-                        ...data
-                    });
-
+                records.push({
+                    id: doc.id,
+                    ...doc.data()
                 });
 
-            } catch (error) {
-
-                console.error(
-                    "Firestore dashboard error:",
-                    error
-                );
-
-                /*
-                   If orderBy fails because some old records
-                   do not have createdAt, load without ordering.
-                */
-
-                try {
-
-                    const snapshot =
-                        await db
-                            .collection("assessments")
-                            .get();
-
-                    snapshot.forEach(function(doc) {
-
-                        const data = doc.data();
-
-                        records.push({
-                            id: doc.id,
-                            ...data
-                        });
-
-                    });
-
-                } catch (secondError) {
-
-                    console.error(
-                        "Firestore fallback failed:",
-                        secondError
-                    );
-                }
             }
-        }
-
-        /*
-           If Firestore has no records,
-           also check local backup.
-        */
-
-        if (records.length === 0) {
-
-            const localRecords =
-                JSON.parse(
-                    localStorage.getItem(
-                        "cyberHygieneRecords"
-                    )
-                ) || [];
-
-            records = localRecords;
-        }
-
-        renderDashboardTable(
-            records,
-            tbody,
-            summary
         );
+
+
+        // Newest records first
+        records.sort(
+            function(a, b) {
+
+                const dateA =
+                    a.timestamp
+                        ? new Date(
+                            a.timestamp
+                        ).getTime()
+                        : 0;
+
+                const dateB =
+                    b.timestamp
+                        ? new Date(
+                            b.timestamp
+                        ).getTime()
+                        : 0;
+
+
+                return dateB - dateA;
+
+            }
+        );
+
+
+        renderDashboard(records);
+
 
     } catch (error) {
 
         console.error(
-            "Dashboard loading error:",
+            "Dashboard error:",
             error
         );
 
-        tbody.innerHTML =
-            `<tr>
-                <td colspan="6"
-                    style="text-align:center;color:#fca5a5;">
-                    Unable to load records.
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    Could not load Firestore data.
                 </td>
-            </tr>`;
+            </tr>
+        `;
+
 
         if (summary) {
-            summary.innerText =
-                "Unable to load analytics.";
+
+            summary.innerHTML =
+                '<span class="error">' +
+                'Firestore error. Check Firebase Database and Rules.' +
+                '</span>';
+
         }
+
     }
 }
 
 
-/* =========================================================
-   RENDER DASHBOARD
-   ========================================================= */
+// ==========================================
+// RENDER DASHBOARD
+// ==========================================
 
-function renderDashboardTable(
-    records,
-    tbody,
-    summary
-) {
+function renderDashboard(records) {
 
-    tbody.innerHTML = "";
+    const body =
+        document.getElementById(
+            "dashboardBody"
+        );
 
-    if (!records || records.length === 0) {
+    const summary =
+        document.getElementById(
+            "summary"
+        );
 
-        tbody.innerHTML =
-            `<tr>
-                <td colspan="6"
-                    style="text-align:center;color:#94a3b8;">
-                    No records found.
-                </td>
-            </tr>`;
 
-        if (summary) {
-            summary.innerHTML =
-                "Total Assessments: 0 | Average: 0%";
-        }
-
+    if (!body) {
         return;
     }
+
+
+    body.innerHTML = "";
+
+
+    const total =
+        records.length;
+
 
     let totalScore = 0;
 
-    records.forEach(function(row) {
+    let strongPasswords = 0;
 
-        const rawScore =
-            Number(row.rawScore) || 0;
+    let suspiciousNumbers = 0;
 
-        totalScore += rawScore;
 
-        const rowElement =
-            document.createElement("tr");
+    records.forEach(
+        function(record) {
 
-        /*
-           Name
-        */
+            totalScore +=
+                Number(
+                    record.score || 0
+                );
 
-        const nameCell =
-            document.createElement("td");
 
-        nameCell.innerText =
-            row.name || "Unknown";
+            if (
+                record.passwordStrength ===
+                "Strong"
+            ) {
 
-        rowElement.appendChild(nameCell);
+                strongPasswords++;
 
-        /*
-           Role
-        */
+            }
 
-        const roleCell =
-            document.createElement("td");
 
-        roleCell.innerText =
-            row.role || "-";
+            if (
+                record.spamStatus ===
+                "Suspicious"
+            ) {
 
-        rowElement.appendChild(roleCell);
+                suspiciousNumbers++;
 
-        /*
-           Password strength
-        */
+            }
 
-        const passwordCell =
-            document.createElement("td");
-
-        const passwordText =
-            row.passwordStrength || "Weak";
-
-        passwordCell.innerText =
-            passwordText;
-
-        if (passwordText === "Strong") {
-            passwordCell.className = "good";
-        } else if (passwordText === "Medium") {
-            passwordCell.className = "medium";
-        } else {
-            passwordCell.className = "low";
         }
+    );
 
-        rowElement.appendChild(passwordCell);
 
-        /*
-           Spam status
-        */
+    const averageScore =
+        total > 0
+            ? Math.round(
+                totalScore / total
+            )
+            : 0;
 
-        const spamCell =
-            document.createElement("td");
 
-        spamCell.innerText =
-            row.spamStatus || "None";
-
-        if (
-            String(row.spamStatus)
-                .toLowerCase()
-                .includes("suspicious")
-        ) {
-            spamCell.className = "low";
-        } else {
-            spamCell.className = "good";
-        }
-
-        rowElement.appendChild(spamCell);
-
-        /*
-           Quiz score
-        */
-
-        const scoreCell =
-            document.createElement("td");
-
-        scoreCell.innerText =
-            row.score ||
-            `${rawScore}/${quizQuestions.length}`;
-
-        rowElement.appendChild(scoreCell);
-
-        /*
-           Timestamp
-        */
-
-        const dateCell =
-            document.createElement("td");
-
-        let displayDate =
-            row.timestamp || "-";
-
-        if (
-            row.createdAt &&
-            typeof row.createdAt.toDate === "function"
-        ) {
-
-            displayDate =
-                row.createdAt
-                    .toDate()
-                    .toLocaleString();
-        }
-
-        dateCell.innerText =
-            displayDate;
-
-        rowElement.appendChild(dateCell);
-
-        tbody.appendChild(rowElement);
-    });
-
-    const average =
-        Math.round(
-            (totalScore /
-                records.length /
-                quizQuestions.length) * 100
-        );
+    // ======================================
+    // SUMMARY
+    // ======================================
 
     if (summary) {
 
-        summary.innerHTML =
-            `Total Assessments: <strong>${records.length}</strong>
-             &nbsp; | &nbsp;
-             Average Score: <strong>${average}%</strong>`;
+        summary.innerHTML = `
+            <b>📋 Total Assessments:</b>
+            ${total}
+
+            <br>
+
+            <b>📈 Average Score:</b>
+            ${averageScore}%
+
+            <br>
+
+            <b>🔐 Strong Passwords:</b>
+            ${strongPasswords}
+
+            <br>
+
+            <b>⚠️ Suspicious Numbers:</b>
+            ${suspiciousNumbers}
+        `;
+
     }
-}
 
 
-/* =========================================================
-   CLEAR LOCAL CACHE
-   ========================================================= */
+    // ======================================
+    // NO RECORDS
+    // ======================================
 
-function clearLogsCache() {
+    if (records.length === 0) {
 
-    const confirmed =
-        confirm(
-            "Clear locally saved backup records?\n\n" +
-            "This will NOT delete records from Firebase Cloud."
-        );
+        body.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    No assessment records found.
+                </td>
+            </tr>
+        `;
 
-    if (!confirmed) {
         return;
     }
 
-    localStorage.removeItem(
-        "cyberHygieneRecords"
-    );
 
-    alert(
-        "Local cache cleared successfully."
-    );
+    // ======================================
+    // TABLE
+    // ======================================
 
-    loadAdminDashboard();
+    records.forEach(
+        function(record) {
+
+            const row =
+                document.createElement("tr");
+
+
+            addCell(
+                row,
+                record.name || "—"
+            );
+
+
+            addCell(
+                row,
+                record.role || "—"
+            );
+
+
+            addCell(
+                row,
+                record.passwordStrength ||
+                "—"
+            );
+
+
+            addCell(
+                row,
+                record.spamStatus ||
+                "—"
+            );
+
+
+            addCell(
+                row,
+                (
+                    record.rawScore || 0
+                ) +
+                "/" +
+                quizQuestions.length +
+                " (" +
+                (
+                    record.score || 0
+                ) +
+                "%)"
+            );
+
+
+            addCell(
+                row,
+                formatDate(
+                    record.timestamp
+                )
+            );
+
+
+            body.appendChild(row);
+
+        }
+    );
 }
 
 
-/* =========================================================
-   KEYBOARD SUPPORT
-   ========================================================= */
+// ==========================================
+// ADD TABLE CELL
+// ==========================================
+
+function addCell(row, value) {
+
+    const cell =
+        document.createElement("td");
+
+    cell.textContent =
+        value;
+
+    row.appendChild(cell);
+}
+
+
+// ==========================================
+// FORMAT DATE
+// ==========================================
+
+function formatDate(value) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    try {
+
+        const date =
+            new Date(value);
+
+
+        if (isNaN(date.getTime())) {
+            return "—";
+        }
+
+
+        return date.toLocaleString(
+            "en-IN"
+        );
+
+    } catch (error) {
+
+        return "—";
+
+    }
+}
+
+
+// ==========================================
+// ADMIN LOGOUT
+// ==========================================
+
+function adminLogout() {
+
+    showSection("home");
+
+}
+
+
+// ==========================================
+// QUIZ RADIO CHANGE
+// ==========================================
+
+document.addEventListener(
+    "change",
+    function(event) {
+
+        if (
+            event.target &&
+            event.target.matches(
+                'input[type="radio"]'
+            )
+        ) {
+
+            updateProgress();
+
+        }
+
+    }
+);
+
+
+// ==========================================
+// PAGE LOAD
+// ==========================================
 
 document.addEventListener(
     "DOMContentLoaded",
     function() {
 
+        console.log(
+            "✅ Cyber Hygiene App loaded."
+        );
+
+
         const adminPassword =
             document.getElementById(
                 "adminPassword"
             );
+
 
         if (adminPassword) {
 
@@ -1211,12 +1526,17 @@ document.addEventListener(
                 "keydown",
                 function(event) {
 
-                    if (event.key === "Enter") {
+                    if (
+                        event.key === "Enter"
+                    ) {
+
                         tryUnlockAdmin();
+
                     }
 
                 }
             );
+
         }
 
     }
