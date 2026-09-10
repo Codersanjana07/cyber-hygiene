@@ -46,6 +46,8 @@
             max-width: 580px;
             padding: 10px;
             transition: max-width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 10;
         }
         
         .app.wide-mode { max-width: 95% !important; }
@@ -279,4 +281,3 @@
         table { width: 100%; min-width: 700px; border-collapse: collapse; text-align: left; }
         th, td { padding: 14px 16px; font-size: 14px; }
         th { background: rgba(255, 255, 255, 0.04); color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid rgba(255,255,255,0.1); }
-        td { color: #cbd5e1; background: rgba(13, 22, 47, 0.3); border-bottom: 1px solid rgba(255,255,255,0.05); }
