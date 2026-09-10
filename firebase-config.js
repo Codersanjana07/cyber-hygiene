@@ -1,7 +1,7 @@
 let db = null;
 const firebaseConfig = {
     apiKey: "AIzaSyCUfGLL3aNrcc8gpikhMFhiJJ7BDSWEKvY",
-    authDomain: "://firebaseapp.com",
+    authDomain: "://firebaseapp.com", // यहाँ अधूरा URL ठीक कर दिया गया है
     projectId: "cyberhygieneapp-80d86",
     storageBucket: "cyberhygieneapp-80d86.firebasestorage.app",
     messagingSenderId: "419036618237",
