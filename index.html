@@ -31,6 +31,12 @@ body{
     border-radius:16px;
     border:1px solid #334155;
     box-shadow:0 20px 40px rgba(0,0,0,.35);
+    transition: max-width 0.3s ease;
+}
+
+/* 🚀 स्लाइडर हटाने के लिए जादुई CSS: एडमिन खोलते ही चौड़ाई बढ़ाएगा */
+.app.wide-mode {
+    max-width: 900px;
 }
 
 .hidden{
@@ -159,6 +165,7 @@ input:focus{
 #strength-bar{
     height:100%;
     width:0;
+    transition: width 0.3s ease;
 }
 
 #strength-text{
@@ -234,20 +241,22 @@ input:focus{
     margin:10px;
 }
 
+/* 🚀 स्लाइडर बार छुपाने के लिए यहाँ बदलाव किया गया है */
 .dashboard{
-    overflow-x:auto;
+    overflow-x: visible !important;
+    margin-top: 15px;
 }
 
 table{
     width:100%;
-    min-width:650px;
+    min-width: 100% !important; /* मिनिमम विड्थ हटाकर स्क्रीन फिट की गई */
     border-collapse:collapse;
     background:#0f172a;
-    font-size:11px;
+    font-size:12px;
 }
 
 th,td{
-    padding:10px;
+    padding:12px 10px;
     border-bottom:1px solid #1e293b;
     text-align:left;
 }
@@ -264,6 +273,7 @@ td{
 .actions{
     display:flex;
     gap:8px;
+    margin-top: 15px;
 }
 
 .actions button{
@@ -284,1250 +294,141 @@ td{
     color:#f87171;
     font-weight:bold;
 }
+
+.summary-box {
+    background: #0f172a;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid #334155;
+}
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="app" id="appContainer">
 
 <!-- ================= HOME ================= -->
-
 <div id="home">
-
-    <h1 class="title">
-        Cyber Hygiene Assessment
-    </h1>
-
-    <p class="subtitle">
-        Welcome! Please select your role to check your secure presence.
-    </p>
-
-    <button class="student" id="studentBtn">
-        👨‍🎓 Student
-    </button>
-
-    <button class="faculty" id="facultyBtn">
-        👩‍🏫 Faculty
-    </button>
-
+    <h1 class="title">Cyber Hygiene Assessment</h1>
+    <p class="subtitle">Welcome! Please select your role to check your secure presence.</p>
+    <button class="student" id="studentBtn">👨‍🎓 Student</button>
+    <button class="faculty" id="facultyBtn">👩‍🏫 Faculty</button>
     <div class="admin">
-
-        <button class="gray" id="adminBtn">
-            🔑 Admin Login
-        </button>
-
+        <button class="gray" id="adminBtn">🔑 Admin Login</button>
     </div>
-
 </div>
-
 
 <!-- ================= PROFILE ================= -->
-
 <div id="profile" class="hidden">
-
     <div class="header">
-
         <h2>Step 1: Profile Setup</h2>
-
-        <span id="roleBadge" class="badge">
-            Student
-        </span>
-
+        <span id="roleBadge" class="badge">Student</span>
     </div>
-
     <label>Full Name</label>
-
-    <input
-        type="text"
-        id="username"
-        placeholder="Enter your name">
-
-    <button class="next" id="profileNext">
-        Next: Password Strength ➡️
-    </button>
-
+    <input type="text" id="username" placeholder="Enter your name">
+    <button class="next" id="profileNext">Next: Password Strength ➡️</button>
 </div>
 
-
 <!-- ================= PASSWORD ================= -->
-
 <div id="passwordScreen" class="hidden">
-
     <div class="header">
-
         <h2>Step 2: Password Tester</h2>
-
-        <span class="badge">
-            Security
-        </span>
-
+        <span class="badge">Security</span>
     </div>
-
-    <p class="subtitle">
-        Test your password strength locally.
-        Your actual password is never stored.
-    </p>
-
+    <p class="subtitle">Test your password strength locally. Your actual password is never stored.</p>
     <label>Test Password</label>
-
-    <input
-        type="password"
-        id="password"
-        placeholder="Enter password">
-
+    <input type="password" id="password" placeholder="Enter password">
     <div id="strength-bar-bg">
         <div id="strength-bar"></div>
     </div>
-
-    <p id="strength-text">
-        Enter password to test strength
-    </p>
-
-    <button class="next" id="passwordNext">
-        Next: Call Tracker ➡️
-    </button>
-
+    <p id="strength-text">Enter password to test strength</p>
+    <button class="next" id="passwordNext">Next: Call Tracker ➡️</button>
 </div>
 
-
-<!-- ================= SPAM ================= -->
-
+<!-- ================= SPam ================= -->
 <div id="spamScreen" class="hidden">
-
     <div class="header">
-
         <h2>Step 3: Spam Call Analysis</h2>
-
-        <span class="badge">
-            Safety
-        </span>
-
+        <span class="badge">Safety</span>
     </div>
-
-    <p class="subtitle">
-        Check basic warning patterns in an unknown number.
-    </p>
-
+    <p class="subtitle">Check basic warning patterns in an unknown number.</p>
     <label>Unknown Phone Number</label>
-
-    <input
-        type="tel"
-        id="phone"
-        placeholder="Enter phone number">
-
-    <button class="gray" id="checkSpamBtn">
-        🔍 Check Number
-    </button>
-
-    <div id="spamResult" class="hidden"></div>
-
-    <button class="next" id="quizNext">
-        Next: Start Quiz 🧠
-    </button>
-
+    <input type="tel" id="phone" placeholder="Enter phone number">
+    <button class="gray" id="checkSpamBtn">🔍 Check Number</button>
+    <div id="spamResult" class="result hidden"></div>
+    <button class="next" id="quizNext">Next: Start Quiz 🧠</button>
 </div>
-
 
 <!-- ================= QUIZ ================= -->
-
 <div id="quizScreen" class="hidden">
-
     <div class="header">
-
         <h2>Step 4: Awareness Test</h2>
-
-        <span class="badge">
-            15 Questions
-        </span>
-
+        <span class="badge">15 Questions</span>
     </div>
-
     <div id="questions"></div>
-
-    <button class="red" id="submitBtn">
-        🔒 SUBMIT ASSESSMENT
-    </button>
-
+    <button class="red" id="submitBtn">🔒 SUBMIT ASSESSMENT</button>
 </div>
 
+<!-- ================= RESULT SCREEN ================= -->
+<div id="resultScreen" class="hidden">
+    <div class="success">
+        <h2>Assessment Completed!</h2>
+        <p>Thank you for contributing to campus cyber hygiene.</p>
+        <div class="score" id="finalScore">0/15</div>
+        <p id="finalScorePercent">(0%)</p>
+        <button class="student" id="backHomeBtn" style="margin-top:20px;">Back to Home</button>
+    </div>
+</div>
 
 <!-- ================= ADMIN LOGIN ================= -->
-
 <div id="adminLogin" class="hidden">
-
-    <h2 style="text-align:center;color:#fbbf24;">
-        Admin Authentication
-    </h2>
-
-    <p class="subtitle">
-        Enter administrator access code.
-    </p>
-
-    <input
-        type="password"
-        id="adminPassword"
-        placeholder="Enter Secret Code">
-
-    <button class="yellow" id="unlockBtn">
-        Unlock
-    </button>
-
-    <button class="gray" id="cancelAdminBtn">
-        Cancel
-    </button>
-
+    <h2 style="text-align:center;color:#fbbf24;">Admin Authentication</h2>
+    <p class="subtitle">Enter administrator access code.</p>
+    <input type="password" id="adminPassword" placeholder="Enter Secret Code">
+    <button class="yellow" id="unlockBtn">Unlock</button>
+    <button class="gray" id="cancelAdminBtn">Cancel</button>
 </div>
 
-
 <!-- ================= ADMIN DASHBOARD ================= -->
-
 <div id="dashboard" class="hidden">
-
     <div class="header">
-
-        <h2 style="color:#fbbf24;">
-            📊 Master Dashboard
-        </h2>
-
-        <button
-            class="gray"
-            id="logoutBtn"
-            style="width:auto;padding:7px 12px;">
-            Logout
-        </button>
-
+        <h2 style="color:#fbbf24;">📊 Master Dashboard</h2>
+        <button class="gray" id="logoutBtn" style="width:auto;padding:7px 12px;margin:0;">Logout</button>
     </div>
-
-    <div id="summary"></div>
-
+    <div id="summary" class="summary-box"></div>
     <div class="dashboard">
-
         <table>
-
             <thead>
-
                 <tr>
                     <th>Name</th>
                     <th>Role</th>
                     <th>Password</th>
-                    <th>Spam</th>
-                    <th>Quiz</th>
-                    <th>Date</th>
+                    <th>Spam Status</th>
+                    <th>Quiz Score</th>
+                    <th>Date & Time</th>
                 </tr>
-
             </thead>
-
-            <tbody id="tableBody"></tbody>
-
+            <tbody id="dashboardBody">
+                <!-- लाइव डेटा यहाँ दिखेगा -->
+            </tbody>
         </table>
-
     </div>
-
     <div class="actions">
-
-        <button class="student" id="refreshBtn">
-            🔄 Refresh
-        </button>
-
-        <button class="red" id="clearBtn">
-            🗑️ Clear Data
-        </button>
-
+        <button class="student" id="refreshBtn">🔄 Refresh Cloud</button>
+        <button class="red" id="clearBtn">🗑️ Clear Cache</button>
     </div>
-
-</div>
-
-
-<!-- ================= RESULT ================= -->
-
-<div id="resultScreen" class="hidden">
-
-    <h2 style="text-align:center;">
-        Assessment Complete 🎉
-    </h2>
-
-    <div id="finalResult"></div>
-
-    <button class="next" id="newAssessmentBtn">
-        🔄 Start New Assessment
-    </button>
-
 </div>
 
 </div>
 
-
-<script>
-
-/* ==========================================
-   APPLICATION STATE
-========================================== */
-
-let role = "";
-let username = "";
-
-let passwordStrength = "Not tested";
-let spamStatus = "Not checked";
-
-const ADMIN_PASSWORD = "admin123";
-
-
-/* ==========================================
-   SCREEN FUNCTION
-========================================== */
-
-function showScreen(id){
-
-    const screens = [
-        "home",
-        "profile",
-        "passwordScreen",
-        "spamScreen",
-        "quizScreen",
-        "adminLogin",
-        "dashboard",
-        "resultScreen"
-    ];
-
-    screens.forEach(screen => {
-
-        document
-            .getElementById(screen)
-            .classList.add("hidden");
-
-    });
-
-    document
-        .getElementById(id)
-        .classList.remove("hidden");
-
-    window.scrollTo(0,0);
-}
-
-
-/* ==========================================
-   HOME
-========================================== */
-
-document
-.getElementById("studentBtn")
-.addEventListener("click", function(){
-
-    role = "Student";
-
-    document
-        .getElementById("roleBadge")
-        .textContent = role;
-
-    showScreen("profile");
-
-});
-
-
-document
-.getElementById("facultyBtn")
-.addEventListener("click", function(){
-
-    role = "Faculty";
-
-    document
-        .getElementById("roleBadge")
-        .textContent = role;
-
-    showScreen("profile");
-
-});
-
-
-document
-.getElementById("adminBtn")
-.addEventListener("click", function(){
-
-    showScreen("adminLogin");
-
-});
-
-
-/* ==========================================
-   PROFILE
-========================================== */
-
-document
-.getElementById("profileNext")
-.addEventListener("click", function(){
-
-    const name =
-        document
-        .getElementById("username")
-        .value
-        .trim();
-
-    if(name.length < 2){
-
-        alert("Please enter your full name.");
-
-        return;
-    }
-
-    username = name;
-
-    showScreen("passwordScreen");
-
-});
-
-
-/* ==========================================
-   PASSWORD
-========================================== */
-
-function calculateStrength(password){
-
-    let score = 0;
-
-    if(password.length >= 8)
-        score++;
-
-    if(password.length >= 12)
-        score++;
-
-    if(/[a-z]/.test(password))
-        score++;
-
-    if(/[A-Z]/.test(password))
-        score++;
-
-    if(/[0-9]/.test(password))
-        score++;
-
-    if(/[^A-Za-z0-9]/.test(password))
-        score++;
-
-    if(score <= 2){
-
-        return {
-            label:"Weak",
-            color:"#ef4444",
-            score:score
-        };
-
-    }
-
-    if(score <= 4){
-
-        return {
-            label:"Medium",
-            color:"#f59e0b",
-            score:score
-        };
-
-    }
-
-    return {
-        label:"Strong",
-        color:"#10b981",
-        score:score
-    };
-}
-
-
-document
-.getElementById("password")
-.addEventListener("input", function(){
-
-    const password = this.value;
-
-    const bar =
-        document.getElementById("strength-bar");
-
-    const text =
-        document.getElementById("strength-text");
-
-    if(!password){
-
-        bar.style.width = "0%";
-
-        text.textContent =
-            "Enter password to test strength";
-
-        text.style.color = "#94a3b8";
-
-        passwordStrength = "Not tested";
-
-        return;
-    }
-
-    const result =
-        calculateStrength(password);
-
-    bar.style.width =
-        ((result.score / 6) * 100) + "%";
-
-    bar.style.background =
-        result.color;
-
-    text.textContent =
-        "Strength: " + result.label;
-
-    text.style.color =
-        result.color;
-
-    passwordStrength =
-        result.label;
-
-});
-
-
-document
-.getElementById("passwordNext")
-.addEventListener("click", function(){
-
-    const password =
-        document
-        .getElementById("password")
-        .value;
-
-    if(!password){
-
-        alert("Please enter a password to test.");
-
-        return;
-    }
-
-    showScreen("spamScreen");
-
-});
-
-
-/* ==========================================
-   SPAM CHECK
-========================================== */
-
-document
-.getElementById("checkSpamBtn")
-.addEventListener("click", function(){
-
-    const phone =
-        document
-        .getElementById("phone")
-        .value
-        .trim();
-
-    const result =
-        document.getElementById("spamResult");
-
-    if(!phone){
-
-        alert("Please enter a phone number.");
-
-        return;
-    }
-
-    const digits =
-        phone.replace(/\D/g,"");
-
-    result.className = "result";
-
-    result.classList.remove("hidden");
-
-    if(digits.length < 7){
-
-        spamStatus =
-            "Invalid / Suspicious";
-
-        result.classList.add("danger");
-
-        result.textContent =
-            "⚠️ Number appears invalid or suspicious.";
-
-        return;
-    }
-
-    const repeated =
-        /^(\d)\1+$/.test(digits);
-
-    const suspiciousPatterns = [
-        "000000",
-        "111111",
-        "123456",
-        "999999"
-    ];
-
-    const suspicious =
-        repeated ||
-        suspiciousPatterns.some(
-            pattern => digits.includes(pattern)
-        );
-
-    if(suspicious){
-
-        spamStatus = "Suspicious";
-
-        result.classList.add("danger");
-
-        result.textContent =
-            "🚨 Suspicious number pattern detected. Do not share OTP or personal information.";
-
-    }else{
-
-        spamStatus =
-            "No obvious warning";
-
-        result.classList.add("safe");
-
-        result.textContent =
-            "✅ No obvious warning pattern detected. Still verify unknown callers.";
-
-    }
-
-});
-
-
-document
-.getElementById("quizNext")
-.addEventListener("click", function(){
-
-    renderQuiz();
-
-    showScreen("quizScreen");
-
-});
-
-
-/* ==========================================
-   QUESTIONS
-========================================== */
-
-const questions = [
-
-{
-q:"What should you do if you receive a suspicious email link?",
-o:[
-"Click it immediately",
-"Verify the sender and link before opening",
-"Forward it to everyone",
-"Reply with your password"
-],
-a:1
-},
-
-{
-q:"Which password is generally strongest?",
-o:[
-"password123",
-"12345678",
-"MyName2020",
-"A long unique passphrase with varied characters"
-],
-a:3
-},
-
-{
-q:"What does phishing usually try to do?",
-o:[
-"Improve your Wi-Fi",
-"Steal sensitive information",
-"Increase battery life",
-"Update your keyboard"
-],
-a:1
-},
-
-{
-q:"Should you share your OTP with another person?",
-o:[
-"Yes, if they ask politely",
-"Yes, with unknown callers",
-"No",
-"Only on social media"
-],
-a:2
-},
-
-{
-q:"What is two-factor authentication?",
-o:[
-"Using two usernames",
-"Using two independent authentication factors",
-"Using two browsers",
-"Using two passwords everywhere"
-],
-a:1
-},
-
-{
-q:"What is the safest action when using public Wi-Fi?",
-o:[
-"Access sensitive accounts without protection",
-"Share your files publicly",
-"Use trusted security practices and avoid sensitive activity when possible",
-"Disable all device security"
-],
-a:2
-},
-
-{
-q:"Why should software updates be installed?",
-o:[
-"They can fix security vulnerabilities",
-"They always delete files",
-"They make passwords unnecessary",
-"They disable antivirus"
-],
-a:0
-},
-
-{
-q:"What should you do with an unexpected attachment?",
-o:[
-"Open it immediately",
-"Verify it before opening",
-"Upload it publicly",
-"Send it to strangers"
-],
-a:1
-},
-
-{
-q:"Which information should generally be kept private?",
-o:[
-"Public holiday dates",
-"Your OTP and passwords",
-"A public website URL",
-"General cybersecurity tips"
-],
-a:1
-},
-
-{
-q:"What is social engineering?",
-o:[
-"Designing social media graphics",
-"Manipulating people into revealing information or taking unsafe actions",
-"Building computer hardware",
-"Installing a printer"
-],
-a:1
-},
-
-{
-q:"What should you do if you think your account is compromised?",
-o:[
-"Ignore it",
-"Change credentials and follow the service's security/recovery process",
-"Share your password publicly",
-"Disable all security controls"
-],
-a:1
-},
-
-{
-q:"Which is a common sign of a phishing message?",
-o:[
-"Unexpected urgency or suspicious links",
-"A normal calendar reminder",
-"A trusted offline document",
-"A blank screen"
-],
-a:0
-},
-
-{
-q:"Why should you avoid reusing passwords?",
-o:[
-"It makes websites slower",
-"One compromised password can put multiple accounts at risk",
-"It increases screen brightness",
-"It prevents updates"
-],
-a:1
-},
-
-{
-q:"What should you do before installing an unfamiliar app?",
-o:[
-"Check its source, permissions and reputation",
-"Give it every permission",
-"Disable device security",
-"Share your banking password"
-],
-a:0
-},
-
-{
-q:"What is a good cybersecurity habit?",
-o:[
-"Use unique passwords, MFA and keep software updated",
-"Share passwords with friends",
-"Ignore security warnings",
-"Use the same password everywhere"
-],
-a:0
-}
-
-];
-
-
-/* ==========================================
-   RENDER QUIZ
-========================================== */
-
-function renderQuiz(){
-
-    const container =
-        document.getElementById("questions");
-
-    container.innerHTML = "";
-
-    questions.forEach((item,index)=>{
-
-        const div =
-            document.createElement("div");
-
-        div.className = "question";
-
-        let html = `
-            <div class="question-title">
-                ${index+1}. ${item.q}
-            </div>
-        `;
-
-        item.o.forEach((option,optionIndex)=>{
-
-            html += `
-                <label class="option">
-                    <input
-                        type="radio"
-                        name="q${index}"
-                        value="${optionIndex}">
-                    <span>${option}</span>
-                </label>
-            `;
-
-        });
-
-        div.innerHTML = html;
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-/* ==========================================
-   SUBMIT
-========================================== */
-
-document
-.getElementById("submitBtn")
-.addEventListener("click", function(){
-
-    let score = 0;
-
-    for(let i=0;i<questions.length;i++){
-
-        const selected =
-            document.querySelector(
-                `input[name="q${i}"]:checked`
-            );
-
-        if(!selected){
-
-            alert(
-                "Please answer all 15 questions."
-            );
-
-            return;
-        }
-
-        if(
-            Number(selected.value) ===
-            questions[i].a
-        ){
-
-            score++;
-        }
-
-    }
-
-    const percentage =
-        Math.round(
-            score / questions.length * 100
-        );
-
-    const record = {
-
-        id:Date.now(),
-
-        name:username,
-
-        role:role,
-
-        passwordStrength:
-            passwordStrength,
-
-        spamStatus:
-            spamStatus,
-
-        quizScore:
-            score,
-
-        quizTotal:
-            questions.length,
-
-        percentage:
-            percentage,
-
-        date:
-            new Date().toLocaleString()
-
-    };
-
-    const data =
-        JSON.parse(
-            localStorage.getItem(
-                "cyberHygieneAssessments"
-            ) || "[]"
-        );
-
-    data.push(record);
-
-    localStorage.setItem(
-        "cyberHygieneAssessments",
-        JSON.stringify(data)
-    );
-
-    showResult(record);
-
-});
-
-
-/* ==========================================
-   RESULT
-========================================== */
-
-function escapeHTML(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-function showResult(record){
-
-    let message;
-
-    if(record.percentage >= 80){
-
-        message =
-            "Excellent cybersecurity awareness!";
-
-    }else if(record.percentage >= 60){
-
-        message =
-            "Good awareness, but there is room for improvement.";
-
-    }else{
-
-        message =
-            "Your cybersecurity awareness needs improvement.";
-
-    }
-
-    document.getElementById("finalResult").innerHTML = `
-
-        <div class="success">
-
-            <h3>
-                Assessment Submitted Successfully
-            </h3>
-
-            <p style="margin-top:10px;">
-                Welcome,
-                ${escapeHTML(record.name)}
-            </p>
-
-            <div class="score">
-                ${record.percentage}%
-            </div>
-
-            <p>
-                Quiz Score:
-                <strong>
-                    ${record.quizScore}/${record.quizTotal}
-                </strong>
-            </p>
-
-            <p style="margin-top:10px;color:#94a3b8;">
-                ${escapeHTML(message)}
-            </p>
-
-            <p style="margin-top:10px;font-size:12px;color:#94a3b8;">
-                Password strength:
-                ${escapeHTML(record.passwordStrength)}
-            </p>
-
-        </div>
-    `;
-
-    showScreen("resultScreen");
-
-}
-
-
-/* ==========================================
-   NEW ASSESSMENT
-========================================== */
-
-document
-.getElementById("newAssessmentBtn")
-.addEventListener("click", function(){
-
-    role = "";
-    username = "";
-
-    passwordStrength = "Not tested";
-    spamStatus = "Not checked";
-
-    document.getElementById("username").value = "";
-    document.getElementById("password").value = "";
-    document.getElementById("phone").value = "";
-
-    document.getElementById("strength-bar").style.width = "0%";
-
-    document.getElementById("strength-text").textContent =
-        "Enter password to test strength";
-
-    document.getElementById("spamResult").className = "hidden";
-
-    showScreen("home");
-
-});
-
-
-/* ==========================================
-   ADMIN
-========================================== */
-
-document
-.getElementById("unlockBtn")
-.addEventListener("click", function(){
-
-    const password =
-        document.getElementById("adminPassword").value;
-
-    if(password === ADMIN_PASSWORD){
-
-        document.getElementById("adminPassword").value = "";
-
-        loadDashboard();
-
-        showScreen("dashboard");
-
-    }else{
-
-        alert("❌ Incorrect admin password.");
-
-        document.getElementById("adminPassword").value = "";
-
-    }
-
-});
-
-
-document
-.getElementById("cancelAdminBtn")
-.addEventListener("click", function(){
-
-    document.getElementById("adminPassword").value = "";
-
-    showScreen("home");
-
-});
-
-
-/* ==========================================
-   DASHBOARD
-========================================== */
-
-function loadDashboard(){
-
-    const data =
-        JSON.parse(
-            localStorage.getItem(
-                "cyberHygieneAssessments"
-            ) || "[]"
-        );
-
-    const body =
-        document.getElementById("tableBody");
-
-    body.innerHTML = "";
-
-    let average = 0;
-
-    if(data.length){
-
-        average =
-            Math.round(
-                data.reduce(
-                    (sum,item)=>
-                        sum + item.percentage,
-                    0
-                ) / data.length
-            );
-
-    }
-
-    document.getElementById("summary").innerHTML = `
-
-        <div style="
-            background:#0f172a;
-            border:1px solid #334155;
-            border-radius:10px;
-            padding:15px;
-            margin-bottom:15px;
-            text-align:center;">
-
-            <strong style="color:#60a5fa;">
-                Total Assessments:
-            </strong>
-            ${data.length}
-
-            &nbsp;&nbsp;
-
-            <strong style="color:#34d399;">
-                Average:
-            </strong>
-            ${average}%
-
-        </div>
-    `;
-
-    if(!data.length){
-
-        body.innerHTML = `
-
-            <tr>
-                <td colspan="6"
-                    style="text-align:center;">
-                    No assessment records found.
-                </td>
-            </tr>
-        `;
-
-        return;
-    }
-
-    data.slice().reverse().forEach(record=>{
-
-        const row =
-            document.createElement("tr");
-
-        let scoreClass =
-            record.percentage >= 80
-                ? "good"
-                : record.percentage >= 60
-                    ? "medium"
-                    : "low";
-
-        row.innerHTML = `
-
-            <td>
-                ${escapeHTML(record.name)}
-            </td>
-
-            <td>
-                ${escapeHTML(record.role)}
-            </td>
-
-            <td>
-                ${escapeHTML(record.passwordStrength)}
-            </td>
-
-            <td>
-                ${escapeHTML(record.spamStatus)}
-            </td>
-
-            <td class="${scoreClass}">
-                ${record.quizScore}/${record.quizTotal}
-                (${record.percentage}%)
-            </td>
-
-            <td>
-                ${escapeHTML(record.date)}
-            </td>
-        `;
-
-        body.appendChild(row);
-
-    });
-
-}
-
-
-/* ==========================================
-   REFRESH
-========================================== */
-
-document
-.getElementById("refreshBtn")
-.addEventListener("click", function(){
-
-    loadDashboard();
-
-});
-
-
-/* ==========================================
-   CLEAR DATA
-========================================== */
-
-document
-.getElementById("clearBtn")
-.addEventListener("click", function(){
-
-    if(
-        confirm(
-            "Are you sure you want to delete all assessment records?"
-        )
-    ){
-
-        localStorage.removeItem(
-            "cyberHygieneAssessments"
-        );
-
-        loadDashboard();
-
-        alert(
-            "All assessment data has been cleared."
-        );
-
-    }
-
-});
-
-
-/* ==========================================
-   LOGOUT
-========================================== */
-
-document
-.getElementById("logoutBtn")
-.addEventListener("click", function(){
-
-    showScreen("home");
-
-});
-
-
-</script>
-
+<!-- Firebase SDKs (सुनिश्चित करें कि ये स्क्रिप्ट्स आपकी HTML में जुड़ी हों) -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+<script src="firebase.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
