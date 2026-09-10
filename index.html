@@ -31,14 +31,15 @@ body{
     border-radius:16px;
     border:1px solid #334155;
     box-shadow:0 20px 40px rgba(0,0,0,.35);
-    transition: max-width 0.4s ease; /* चौड़ाई बदलने के लिए स्मूद एनीमेशन */
+    transition: max-width 0.4s ease;
 }
 
-/* 🚀 डैशबोर्ड खुलते ही यह बॉक्स को पूरा चौड़ा (95%) कर देगा जिससे स्लाइडर गायब हो जाएगा */
+/* 🚀 डैशबोर्ड एक्टिव होने पर पूरा चौड़ा (95%) करने के लिए ताकि स्लाइडर हट जाए */
 .app.wide-mode {
     max-width: 95% !important;
 }
 
+/* स्क्रीन्स को छुपाने के लिए सबसे जरूरी क्लास */
 .hidden{
     display:none !important;
 }
@@ -241,7 +242,7 @@ input:focus{
     margin:10px;
 }
 
-/* 🚀 स्लाइडर बार हटाने के लिए यहाँ ओवरफ्लो विज़िबल किया गया है */
+/* 🚀 स्लाइडर बार हटाने के लिए टेबल कंटेनर सेटिंग्स */
 .dashboard{
     overflow-x: visible !important;
     margin-top: 15px;
@@ -250,7 +251,7 @@ input:focus{
 
 table{
     width:100%;
-    min-width: 100% !important; /* पुराना 650px हटाकर 100% फ्लूइड किया */
+    min-width: 100% !important; /* पुराना फिक्स्ड 650px हटाकर 100% फ्लूइड किया */
     border-collapse:collapse;
     background:#0f172a;
     font-size:12px;
@@ -310,7 +311,6 @@ td{
 
 <body>
 
-<!-- 🚀 यहाँ id="appContainer" दिया गया है जो app.js से लिंक होकर चौड़ाई को कंट्रोल करेगा -->
 <div class="app" id="appContainer">
 
 <!-- ================= HOME ================= -->
@@ -427,9 +427,11 @@ td{
 
 </div>
 
-<!-- Firebase SDKs और आपके लॉजिक स्क्रिप्ट्स का कनेक्शन -->
+<!-- Firebase CDN SDKs -->
 <script src="https://gstatic.com"></script>
 <script src="https://gstatic.com"></script>
+
+<!-- आपकी अलग स्क्रिप्ट फाइलों का कनेक्शन -->
 <script src="firebase.js"></script>
 <script src="app.js"></script>
 </body>
