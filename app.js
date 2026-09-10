@@ -19,31 +19,54 @@ const quizQuestions = [
 ];
 
 function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-    document.getElementById(screenId).classList.remove('hidden');
+    const screens = ['home', 'profile', 'passwordScreen', 'spamScreen', 'quizScreen', 'adminLogin', 'dashboard', 'resultScreen'];
+    screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+    });
+    
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) targetScreen.classList.remove('hidden');
+
+    // 🚀 यहाँ पर डैशबोर्ड लोड होते ही वाइड मोड ऑन होगा जिससे स्लाइडर गायब हो जाएगा
+    const appContainer = document.getElementById('appContainer');
+    if (appContainer) {
+        if (screenId === 'dashboard') {
+            appContainer.classList.add('wide-mode');
+        } else {
+            appContainer.classList.remove('wide-mode');
+        }
+    }
 }
 
 function selectRole(role) {
     userData.role = role;
-    document.getElementById('role-badge').innerText = role;
-    showScreen('profile-screen');
+    const roleBadge = document.getElementById('roleBadge');
+    if (roleBadge) roleBadge.innerText = role;
+    showScreen('profile');
 }
 
 function nextToPassword() {
-    userData.name = document.getElementById('username').value;
-    if (!userData.name.trim()) { 
+    const usernameInput = document.getElementById('username');
+    userData.name = usernameInput ? usernameInput.value.trim() : "";
+    if (!userData.name) { 
         alert("Please enter your name to proceed."); 
         return; 
     }
-    showScreen('password-screen');
+    showScreen('passwordScreen');
 }
 
 function checkPasswordStrength() {
-    const pass = document.getElementById('password').value;
+    const passInput = document.getElementById('password');
+    const pass = passInput ? passInput.value : "";
     const bar = document.getElementById('strength-bar');
     const txt = document.getElementById('strength-text');
     
-    if (pass.length === 0) { bar.style.width = '0%'; txt.innerText = "Enter password"; return; }
+    if (pass.length === 0) { 
+        if (bar) bar.style.width = '0%'; 
+        if (txt) txt.innerText = "Enter password"; 
+        return; 
+    }
     
     let score = 0;
     if (pass.length >= 8) score++;
@@ -52,155 +75,129 @@ function checkPasswordStrength() {
     if (/[^A-Za-z0-9]/.test(pass)) score++;
 
     if (score <= 1) { 
-        bar.style.width = "25%"; bar.style.backgroundColor = "#ef4444"; 
-        txt.innerText = "🔴 Weak Password"; userData.passwordStrength = "Weak"; 
+        if (bar) { bar.style.width = "25%"; bar.style.backgroundColor = "#ef4444"; }
+        if (txt) txt.innerText = "🛑 Weak Password"; 
+        userData.passwordStrength = "Weak"; 
     } else if (score <= 3) { 
-        bar.style.width = "50%"; bar.style.backgroundColor = "#eab308"; 
-        txt.innerText = "🟡 Medium Password"; userData.passwordStrength = "Medium"; 
+        if (bar) { bar.style.width = "50%"; bar.style.backgroundColor = "#eab308"; }
+        if (txt) txt.innerText = "⚠️ Medium Password"; 
+        userData.passwordStrength = "Medium"; 
     } else { 
-        bar.style.width = "100%"; bar.style.backgroundColor = "#10b981"; 
-        txt.innerText = "🟢 Strong Password"; userData.passwordStrength = "Strong"; 
+        if (bar) { bar.style.width = "100%"; bar.style.backgroundColor = "#10b981"; }
+        if (txt) txt.innerText = "✅ Strong Password"; 
+        userData.passwordStrength = "Strong"; 
     }
 }
 
 function nextToTracker() {
-    const pass = document.getElementById('password').value;
-    if (!pass.trim()) { alert("Please test a password before moving forward."); return; }
-    showScreen('tracker-screen');
+    const passInput = document.getElementById('password');
+    if (!passInput || !passInput.value.trim()) { alert("Please test a password first."); return; }
+    showScreen('spamScreen');
 }
 
 function checkSpam() {
-    const num = document.getElementById('spam-phone').value;
-    if (!num.trim()) { alert("Please enter a valid number"); return; }
-    userData.spamNumber = num;
+    const phoneInput = document.getElementById('phone');
+    const num = phoneInput ? phoneInput.value.trim() : "";
+    if (!num) { alert("Please enter a phone number"); return; }
 
-    const resultBox = document.getElementById('spam-result');
-    resultBox.classList.remove('hidden');
-
-    if (num.startsWith('91') || num.length % 2 === 0) {
-        resultBox.style.background = "rgba(220,38,38,0.2)";
-        resultBox.style.border = "1px solid #dc2626";
-        resultBox.style.color = "#f87171";
-        resultBox.innerText = "🚨 HIGH SPAM RISK!";
-    } else {
-        resultBox.style.background = "rgba(16,185,129,0.2)";
-        resultBox.style.border = "1px solid #10b981";
-        resultBox.style.color = "#34d399";
-        resultBox.innerText = "✅ SAFE NUMBER";
+    const resultBox = document.getElementById('spamResult');
+    if (resultBox) {
+        resultBox.classList.remove('hidden');
+        if (/(\d)\1{4,}/.test(num) || num.length < 10) {
+            resultBox.className = "result danger";
+            resultBox.innerText = "🚨 Invalid / Suspicious Alert!";
+            userData.spamNumber = "Invalid / Suspicious";
+        } else {
+            resultBox.className = "result safe";
+            resultBox.innerText = "✅ No obvious warning patterns detected.";
+            userData.spamNumber = "No obvious warning";
+        }
     }
 }
 
 function nextToQuiz() { 
-    showScreen('quiz-screen'); 
-    
-    const container = document.getElementById('all-questions-container');
+    showScreen('quizScreen'); 
+    const container = document.getElementById('questions');
+    if (!container) return;
     container.innerHTML = '';
     
     quizQuestions.forEach((currentQ, qIdx) => {
         const qBlock = document.createElement('div');
-        qBlock.style.marginBottom = "20px";
-        qBlock.style.borderBottom = "1px solid #334155";
-        qBlock.style.paddingBottom = "15px";
+        qBlock.className = "question";
         
         const qTitle = document.createElement('div');
-        qTitle.style.background = "#0f172a";
-        qTitle.style.padding = "10px";
-        qTitle.style.borderRadius = "8px";
-        qTitle.style.fontSize = "13px";
-        qTitle.style.marginBottom = "10px";
-        qTitle.style.fontWeight = "600";
+        qTitle.className = "question-title";
         qTitle.innerText = `${qIdx + 1}. ${currentQ.q}`;
         qBlock.appendChild(qTitle);
         
-        const optionsDiv = document.createElement('div');
-        optionsDiv.style.display = "flex";
-        optionsDiv.style.flexDirection = "column";
-        optionsDiv.style.gap = "6px";
-        
         currentQ.o.forEach((opt, oIdx) => {
             const label = document.createElement('label');
-            label.style.display = "flex";
-            label.style.alignItems = "center";
-            label.style.gap = "8px";
-            label.style.background = "#1e293b";
-            label.style.padding = "10px";
-            label.style.borderRadius = "6px";
-            label.style.cursor = "pointer";
-            label.style.fontSize = "12px";
-            
-            const radio = document.createElement('input');
-            radio.type = "radio";
-            radio.name = `question_${qIdx}`;
-            radio.value = oIdx;
-            radio.style.cursor = "pointer";
-            
-            label.appendChild(radio);
-            label.appendChild(document.createTextNode(opt));
-            optionsDiv.appendChild(label);
+            label.className = "option";
+            label.innerHTML = `<input type="radio" name="question_${qIdx}" value="${oIdx}"> ${opt}`;
+            qBlock.appendChild(label);
         });
-        
-        qBlock.appendChild(optionsDiv);
         container.appendChild(qBlock);
     });
 }
 
+// ☁️ लाइव डेटा Firebase Firestore में सेव करने का मुख्य लॉजिक
 function submitFinalData() {
     let calculatedScore = 0;
-    let allAnswered = true;
-    
     quizQuestions.forEach((currentQ, qIdx) => {
         const selected = document.querySelector(`input[name="question_${qIdx}"]:checked`);
-        if (!selected) { allAnswered = false; }
-        else {
-            if (parseInt(selected.value) === currentQ.a) { calculatedScore++; }
+        if (selected && parseInt(selected.value) === currentQ.a) { 
+            calculatedScore++; 
         }
     });
-    
-    if (!allAnswered) {
-        alert("Please answer all 15 questions before submitting!");
-        return;
-    }
-    
-    userData.score = calculatedScore;
 
-    // 1. Permanent Local Backup Storage Engine (Guarantees offline run without freezing)
-    let localBackup = JSON.parse(localStorage.getItem("cyber_survey_db")) || [];
-    localBackup.push({
+    const percentage = Math.round((calculatedScore / quizQuestions.length) * 100);
+    const recordData = {
         name: userData.name,
         role: userData.role,
         passwordStrength: userData.passwordStrength,
-        spamNumber: userData.spamNumber,
-        score: `${userData.score}/${quizQuestions.length}`
-    });
-    localStorage.setItem("cyber_survey_db", JSON.stringify(localBackup));
+        spamStatus: userData.spamNumber,
+        score: `${calculatedScore}/${quizQuestions.length} (${percentage}%)`,
+        rawScore: calculatedScore,
+        timestamp: new Date().toLocaleString()
+    };
 
-    // 2. Cloud database push if connected live
+    // Firebase में लाइव डेटा भेजना
     if (db) {
-        db.collection("cyber_hygiene_records").add({
-            name: userData.name,
-            role: userData.role,
-            passwordStrength: userData.passwordStrength,
-            spamNumber: userData.spamNumber,
-            score: `${userData.score}/${quizQuestions.length}`,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        })
+        db.collection("assessments").add(recordData)
         .then(() => {
-            alert("🎉 Thank you! Your response is securely saved permanently into the cloud database.");
-            location.reload();
+            showResultsPage(calculatedScore, percentage);
         })
-        .catch(() => {
-            alert("🎉 Response saved successfully in secure standalone mode!");
-            location.reload();
+        .catch((error) => {
+            console.error("Firebase Save Error, running offline backup: ", error);
+            saveToBackup(recordData);
+            showResultsPage(calculatedScore, percentage);
         });
     } else {
-        alert("🎉 Response saved successfully!");
-        location.reload();
+        saveToBackup(recordData);
+        showResultsPage(calculatedScore, percentage);
     }
 }
 
-function loginAdmin() {
-    const pass = document.getElementById('admin-pass').value;
-    if (pass === "admin123") {
-        showScreen('admin-dashboard-screen');
-        fetchLiveRecords();
-    } else {
+function saveToBackup(data) {
+    let localRecords = JSON.parse(localStorage.getItem('cyberHygieneRecords')) || [];
+    localRecords.push(data);
+    localStorage.setItem('cyberHygieneRecords', JSON.stringify(localRecords));
+}
+
+function showResultsPage(score, percent) {
+    document.getElementById('finalScore').innerText = `${score}/${quizQuestions.length}`;
+    document.getElementById('finalScorePercent').innerText = `(${percent}%)`;
+    showScreen('resultScreen');
+}
+
+// 📊 Firebase से डेटा लोड करके एडमिन डैशबोर्ड बिना स्लाइडर के रेंडर करना
+function loadAdminDashboard() {
+    const tbody = document.getElementById('dashboardBody');
+    const summary = document.getElementById('summary');
+    if (!tbody) return;
+
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Loading cloud analytics...</td></tr>`;
+
+    const renderTable = (records) => {
+        tbody.innerHTML = '';
+        if (records.length === 0) {
