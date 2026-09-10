@@ -23,36 +23,237 @@ body{
     padding:15px;
 }
 
-.app {
-    width: 100%;
-    max-width: 520px; /* फॉर्म्स के लिए पुरानी चौड़ाई */
-    background: #1e293b;
-    padding: 25px;
-    border-radius: 16px;
-    border: 1px solid #334155;
-    box-shadow: 0 20px 40px rgba(0,0,0,.35);
-    transition: max-width 0.4s ease; /* चौड़ाई बदलते समय स्मूद एनीमेशन */
+.app{
+    width:100%;
+    max-width:520px;
+    background:#1e293b;
+    padding:25px;
+    border-radius:16px;
+    border:1px solid #334155;
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+    transition: max-width 0.4s ease; /* चौड़ाई बदलने के लिए स्मूद एनीमेशन */
 }
 
-/* 🚀 सबसे महत्वपूर्ण लाइन: एडमिन डैशबोर्ड खुलते ही यह बॉक्स को पूरा चौड़ा (95%) कर देगा */
+/* 🚀 डैशबोर्ड खुलते ही यह बॉक्स को पूरा चौड़ा (95%) कर देगा जिससे स्लाइडर गायब हो जाएगा */
 .app.wide-mode {
-    max-width: 95% !important; 
+    max-width: 95% !important;
 }
 
-/* टेबल के ऊपर जो पुराने कोड में स्क्रॉल लगा था उसे पूरी तरह हटा दें */
-.dashboard {
-    overflow-x: visible !important; 
+.hidden{
+    display:none !important;
+}
+
+.title{
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+    background:linear-gradient(to right,#60a5fa,#34d399);
+    -webkit-background-clip:text;
+    color:transparent;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#94a3b8;
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:25px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.student{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+
+.faculty{
+    background:linear-gradient(135deg,#059669,#047857);
+}
+
+.next{
+    background:linear-gradient(to right,#3b82f6,#10b981);
+}
+
+.gray{
+    background:#475569;
+}
+
+.red{
+    background:linear-gradient(to right,#ef4444,#9333ea);
+}
+
+.yellow{
+    background:#f59e0b;
+    color:#111827;
+}
+
+.admin{
+    margin-top:25px;
+    padding-top:15px;
+    border-top:1px solid #334155;
+}
+
+h2{
+    color:#60a5fa;
+    font-size:19px;
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    color:#94a3b8;
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    background:#0f172a;
+    border:1px solid #334155;
+    border-radius:8px;
+    color:white;
+    outline:none;
+    margin-bottom:15px;
+}
+
+input:focus{
+    border-color:#3b82f6;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #334155;
+    padding-bottom:12px;
+    margin-bottom:15px;
+}
+
+.badge{
+    background:#1e3a8a;
+    color:#93c5fd;
+    padding:5px 10px;
+    border-radius:15px;
+    font-size:11px;
+}
+
+#strength-bar-bg{
+    height:7px;
+    background:#334155;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:-8px;
+    margin-bottom:5px;
+}
+
+#strength-bar{
+    height:100%;
+    width:0;
+    transition: width 0.3s ease;
+}
+
+#strength-text{
+    font-size:11px;
+    margin-bottom:15px;
+}
+
+.result{
+    padding:12px;
+    border-radius:8px;
+    margin:10px 0;
+    text-align:center;
+    font-size:13px;
+}
+
+.safe{
+    background:#064e3b;
+    color:#6ee7b7;
+    border:1px solid #10b981;
+}
+
+.danger{
+    background:#450a0a;
+    color:#fca5a5;
+    border:1px solid #ef4444;
+}
+
+.question{
+    background:#172033;
+    border:1px solid #334155;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:12px;
+}
+
+.question-title{
+    font-size:13px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:10px;
+}
+
+.option{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#0f172a;
+    padding:9px;
+    border-radius:7px;
+    margin-top:6px;
+    cursor:pointer;
+    color:#cbd5e1;
+}
+
+.option input{
+    width:auto;
+    margin:0;
+}
+
+.success{
+    background:#064e3b;
+    border:1px solid #10b981;
+    border-radius:10px;
+    padding:20px;
+    text-align:center;
+    margin-top:15px;
+}
+
+.score{
+    font-size:35px;
+    font-weight:bold;
+    color:#34d399;
+    margin:10px;
+}
+
+/* 🚀 स्लाइडर बार हटाने के लिए यहाँ ओवरफ्लो विज़िबल किया गया है */
+.dashboard{
+    overflow-x: visible !important;
     margin-top: 15px;
     width: 100%;
 }
 
-/* टेबल को पूरी स्क्रीन पर फ्लूइड (Fluid) सेट करना */
-table {
-    width: 100%;
-    min-width: 100% !important; /* पुराना 650px हटाकर 100% किया ताकि डेटा न कटे */
-    border-collapse: collapse;
-    background: #0f172a;
-    font-size: 12px;
+table{
+    width:100%;
+    min-width: 100% !important; /* पुराना 650px हटाकर 100% फ्लूइड किया */
+    border-collapse:collapse;
+    background:#0f172a;
+    font-size:12px;
 }
 
 th,td{
@@ -109,6 +310,7 @@ td{
 
 <body>
 
+<!-- 🚀 यहाँ id="appContainer" दिया गया है जो app.js से लिंक होकर चौड़ाई को कंट्रोल करेगा -->
 <div class="app" id="appContainer">
 
 <!-- ================= HOME ================= -->
@@ -149,7 +351,7 @@ td{
     <button class="next" id="passwordNext">Next: Call Tracker ➡️</button>
 </div>
 
-<!-- ================= SPam ================= -->
+<!-- ================= SPAM ================= -->
 <div id="spamScreen" class="hidden">
     <div class="header">
         <h2>Step 3: Spam Call Analysis</h2>
@@ -213,7 +415,7 @@ td{
                 </tr>
             </thead>
             <tbody id="dashboardBody">
-                <!-- लाइव डेटा यहाँ दिखेगा -->
+                <!-- लाइव डेटा यहाँ लोड होगा -->
             </tbody>
         </table>
     </div>
@@ -225,7 +427,7 @@ td{
 
 </div>
 
-<!-- Firebase SDKs (सुनिश्चित करें कि ये स्क्रिप्ट्स आपकी HTML में जुड़ी हों) -->
+<!-- Firebase SDKs और आपके लॉजिक स्क्रिप्ट्स का कनेक्शन -->
 <script src="https://gstatic.com"></script>
 <script src="https://gstatic.com"></script>
 <script src="firebase.js"></script>
