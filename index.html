@@ -34,7 +34,7 @@ body{
     transition: max-width 0.4s ease;
 }
 
-/* डैशबोर्ड एक्टिव होने पर पूरा चौड़ा (95%) करने के लिए ताकि स्लाइडर हट जाए */
+/* 🚀 डैशबोर्ड एक्टिव होने पर पूरा चौड़ा (95%) करने के लिए ताकि स्लाइडर हट जाए */
 .app.wide-mode {
     max-width: 95% !important;
 }
@@ -242,7 +242,7 @@ input:focus{
     margin:10px;
 }
 
-/* स्लाइडर बार हटाने के लिए टेबल कंटेनर सेटिंग्स */
+/* 🚀 स्लाइडर बार हटाने के लिए टेबल कंटेनर सेटिंग्स */
 .dashboard{
     overflow-x: visible !important;
     margin-top: 15px;
@@ -415,12 +415,12 @@ td{
                 </tr>
             </thead>
             <tbody id="dashboardBody">
-                <!-- डेटा लोड होगा -->
+                <!-- लाइव डेटा यहाँ लोड होगा -->
             </tbody>
         </table>
     </div>
     <div class="actions">
-        <button class="student" id="refreshBtn" onclick="loadAdminDashboard()">🔄 Refresh Logs</button>
+        <button class="student" id="refreshBtn" onclick="loadAdminDashboard()">🔄 Refresh Cloud</button>
         <button class="red" id="clearBtn" onclick="clearLogsCache()">🗑️ Clear Cache</button>
     </div>
 </div>
@@ -430,11 +430,10 @@ td{
 <!-- Firebase CDN SDKs -->
 <script src="https://gstatic.com"></script>
 <script src="https://gstatic.com"></script>
-
-<!-- आपकी एक्सटर्नल स्क्रिप्ट्स -->
 <script src="firebase.js"></script>
-<script src="app.js"></script>
 
-<!-- 🛡️ FAIL-SAFE PROTECTION LAYER (यह आपके बटन्स को कभी रुकने नहीं देगा!) -->
+<!-- ================= CORE LOGIC JAVASCRIPT ================= -->
 <script>
-window.addEventListener('DOMContentLoaded', () => {
+let userData = { name: "", role: "", passwordStrength: "Weak", spamNumber: "None", score: 0 };
+
+const quizQuestions = [
