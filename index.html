@@ -314,15 +314,20 @@ td{
 <div class="app" id="appContainer">
 
 <!-- ================= HOME ================= -->
+<!-- ================= HOME ================= -->
 <div id="home">
     <h1 class="title">Cyber Hygiene Assessment</h1>
     <p class="subtitle">Welcome! Please select your role to check your secure presence.</p>
-    <button class="student" id="studentBtn">👨‍🎓 Student</button>
-    <button class="faculty" id="facultyBtn">👩‍🏫 Faculty</button>
+    
+    <!-- 🚀 यहाँ सीधे फंक्शन कॉल (onclick) जोड़ दिए गए हैं ताकि क्लिक तुरंत काम करे -->
+    <button class="student" id="studentBtn" onclick="selectRole('Student')">👨‍🎓 Student</button>
+    <button class="faculty" id="facultyBtn" onclick="selectRole('Faculty')">👩‍🏫 Faculty</button>
+    
     <div class="admin">
-        <button class="gray" id="adminBtn">🔑 Admin Login</button>
+        <button class="gray" id="adminBtn" onclick="showScreen('adminLogin')">🔑 Admin Login</button>
     </div>
 </div>
+
 
 <!-- ================= PROFILE ================= -->
 <div id="profile" class="hidden">
