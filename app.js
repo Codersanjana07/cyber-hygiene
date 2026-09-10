@@ -103,7 +103,7 @@ function checkSpam() {
     const resultBox = document.getElementById('spamResult');
     if (resultBox) {
         resultBox.classList.remove('hidden');
-        if (/(\d)\1{4,}/.test(num) || num.length < 10) {
+        if (/(\d)\1{4,}/.test(num) || num.length < 10 || num.startsWith('140')) {
             resultBox.className = "result danger";
             resultBox.innerText = "🚨 Invalid / Suspicious Alert!";
             userData.spamNumber = "Invalid / Suspicious";
@@ -140,7 +140,6 @@ function nextToQuiz() {
     });
 }
 
-// ☁️ लाइव डेटा Firebase Firestore में सेव करने का मुख्य लॉजिक
 function submitFinalData() {
     let calculatedScore = 0;
     quizQuestions.forEach((currentQ, qIdx) => {
@@ -161,17 +160,10 @@ function submitFinalData() {
         timestamp: new Date().toLocaleString()
     };
 
-    // Firebase में लाइव डेटा भेजना
-    if (db) {
+    if (typeof db !== 'undefined' && db !== null) {
         db.collection("assessments").add(recordData)
-        .then(() => {
-            showResultsPage(calculatedScore, percentage);
-        })
-        .catch((error) => {
-            console.error("Firebase Save Error, running offline backup: ", error);
-            saveToBackup(recordData);
-            showResultsPage(calculatedScore, percentage);
-        });
+        .then(() => { showResultsPage(calculatedScore, percentage); })
+        .catch((e) => { saveToBackup(recordData); showResultsPage(calculatedScore, percentage); });
     } else {
         saveToBackup(recordData);
         showResultsPage(calculatedScore, percentage);
@@ -190,7 +182,6 @@ function showResultsPage(score, percent) {
     showScreen('resultScreen');
 }
 
-// 📊 Firebase से डेटा लोड करके एडमिन डैशबोर्ड बिना स्लाइडर के रेंडर करना
 function loadAdminDashboard() {
     const tbody = document.getElementById('dashboardBody');
     const summary = document.getElementById('summary');
@@ -201,3 +192,11 @@ function loadAdminDashboard() {
     const renderTable = (records) => {
         tbody.innerHTML = '';
         if (records.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#94a3b8;">No records found.</td></tr>`;
+            if (summary) summary.innerHTML = `Total Assessments: 0 | Average: 0%`;
+            return;
+        }
+
+        let totalScore = 0;
+        records.forEach(row => {
+            totalScore += (row.rawScore || 0);
