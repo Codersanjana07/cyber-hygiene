@@ -34,7 +34,7 @@ body{
     transition: max-width 0.4s ease;
 }
 
-/* 🚀 डैशबोर्ड एक्टिव होने पर पूरा चौड़ा (95%) करने के लिए ताकि स्लाइडर हट जाए */
+/* डैशबोर्ड एक्टिव होने पर पूरा चौड़ा (95%) करने के लिए ताकि स्लाइडर हट जाए */
 .app.wide-mode {
     max-width: 95% !important;
 }
@@ -242,7 +242,7 @@ input:focus{
     margin:10px;
 }
 
-/* 🚀 हॉरिजॉन्टल स्लाइडर बार हटाने के लिए टेबल कंटेनर सेटिंग्स */
+/* स्लाइडर बार हटाने के लिए टेबल कंटेनर सेटिंग्स */
 .dashboard{
     overflow-x: visible !important;
     margin-top: 15px;
@@ -251,7 +251,7 @@ input:focus{
 
 table{
     width:100%;
-    min-width: 100% !important; /* पुराना फिक्स्ड 650px हटाकर 100% फ्लूइड किया */
+    min-width: 100% !important;
     border-collapse:collapse;
     background:#0f172a;
     font-size:12px;
@@ -317,11 +317,8 @@ td{
 <div id="home">
     <h1 class="title">Cyber Hygiene Assessment</h1>
     <p class="subtitle">Welcome! Please select your role to check your secure presence.</p>
-    
-    <!-- 🚀 सीधे HTML क्लिक इवेंट्स को फोर्स किया गया है ताकि कोई एरर ब्लॉक न कर सके -->
-    <button class="student" id="studentBtn" onclick="if(typeof selectRole==='function'){selectRole('Student')}else{showScreen('profile');document.getElementById('roleBadge').innerText='Student';}">👨‍🎓 Student</button>
-    <button class="faculty" id="facultyBtn" onclick="if(typeof selectRole==='function'){selectRole('Faculty')}else{showScreen('profile');document.getElementById('roleBadge').innerText='Faculty';}">👩‍🏫 Faculty</button>
-    
+    <button class="student" id="studentBtn" onclick="selectRole('Student')">👨‍🎓 Student</button>
+    <button class="faculty" id="facultyBtn" onclick="selectRole('Faculty')">👩‍🏫 Faculty</button>
     <div class="admin">
         <button class="gray" id="adminBtn" onclick="showScreen('adminLogin')">🔑 Admin Login</button>
     </div>
@@ -335,7 +332,7 @@ td{
     </div>
     <label>Full Name</label>
     <input type="text" id="username" placeholder="Enter your name">
-    <button class="next" id="profileNext" onclick="if(typeof nextToPassword==='function'){nextToPassword()}">Next: Password Strength ➡️</button>
+    <button class="next" id="profileNext" onclick="nextToPassword()">Next: Password Strength ➡️</button>
 </div>
 
 <!-- ================= PASSWORD ================= -->
@@ -346,12 +343,12 @@ td{
     </div>
     <p class="subtitle">Test your password strength locally. Your actual password is never stored.</p>
     <label>Test Password</label>
-    <input type="password" id="password" placeholder="Enter password" oninput="if(typeof checkPasswordStrength==='function'){checkPasswordStrength()}">
+    <input type="password" id="password" placeholder="Enter password" oninput="checkPasswordStrength()">
     <div id="strength-bar-bg">
         <div id="strength-bar"></div>
     </div>
     <p id="strength-text">Enter password to test strength</p>
-    <button class="next" id="passwordNext" onclick="if(typeof nextToTracker==='function'){nextToTracker()}">Next: Call Tracker ➡️</button>
+    <button class="next" id="passwordNext" onclick="nextToTracker()">Next: Call Tracker ➡️</button>
 </div>
 
 <!-- ================= SPAM ================= -->
@@ -363,9 +360,9 @@ td{
     <p class="subtitle">Check basic warning patterns in an unknown number.</p>
     <label>Unknown Phone Number</label>
     <input type="tel" id="phone" placeholder="Enter phone number">
-    <button class="gray" id="checkSpamBtn" onclick="if(typeof checkSpam==='function'){checkSpam()}">🔍 Check Number</button>
+    <button class="gray" id="checkSpamBtn" onclick="checkSpam()">🔍 Check Number</button>
     <div id="spamResult" class="result hidden"></div>
-    <button class="next" id="quizNext" onclick="if(typeof nextToQuiz==='function'){nextToQuiz()}">Next: Start Quiz 🧠</button>
+    <button class="next" id="quizNext" onclick="nextToQuiz()">Next: Start Quiz 🧠</button>
 </div>
 
 <!-- ================= QUIZ ================= -->
@@ -375,7 +372,7 @@ td{
         <span class="badge">15 Questions</span>
     </div>
     <div id="questions"></div>
-    <button class="red" id="submitBtn" onclick="if(typeof submitFinalData==='function'){submitFinalData()}">🔒 SUBMIT ASSESSMENT</button>
+    <button class="red" id="submitBtn" onclick="submitFinalData()">🔒 SUBMIT ASSESSMENT</button>
 </div>
 
 <!-- ================= RESULT SCREEN ================= -->
@@ -385,7 +382,7 @@ td{
         <p>Thank you for contributing to campus cyber hygiene.</p>
         <div class="score" id="finalScore">0/15</div>
         <p id="finalScorePercent">(0%)</p>
-        <button class="student" id="backHomeBtn">Back to Home</button>
+        <button class="student" id="backHomeBtn" onclick="resetFormToHome()">Back to Home</button>
     </div>
 </div>
 
@@ -394,7 +391,7 @@ td{
     <h2 style="text-align:center;color:#fbbf24;">Admin Authentication</h2>
     <p class="subtitle">Enter administrator access code.</p>
     <input type="password" id="adminPassword" placeholder="Enter Secret Code">
-    <button class="yellow" id="unlockBtn">Unlock</button>
+    <button class="yellow" id="unlockBtn" onclick="tryUnlockAdmin()">Unlock</button>
     <button class="gray" id="cancelAdminBtn" onclick="showScreen('home')">Cancel</button>
 </div>
 
@@ -418,8 +415,26 @@ td{
                 </tr>
             </thead>
             <tbody id="dashboardBody">
-                <!-- लाइव डेटा यहाँ लोड होगा -->
+                <!-- डेटा लोड होगा -->
             </tbody>
         </table>
     </div>
     <div class="actions">
+        <button class="student" id="refreshBtn" onclick="loadAdminDashboard()">🔄 Refresh Logs</button>
+        <button class="red" id="clearBtn" onclick="clearLogsCache()">🗑️ Clear Cache</button>
+    </div>
+</div>
+
+</div>
+
+<!-- Firebase CDN SDKs -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+
+<!-- आपकी एक्सटर्नल स्क्रिप्ट्स -->
+<script src="firebase.js"></script>
+<script src="app.js"></script>
+
+<!-- 🛡️ FAIL-SAFE PROTECTION LAYER (यह आपके बटन्स को कभी रुकने नहीं देगा!) -->
+<script>
+window.addEventListener('DOMContentLoaded', () => {
