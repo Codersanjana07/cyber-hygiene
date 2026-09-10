@@ -10,7 +10,7 @@
     box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 body{
@@ -31,15 +31,13 @@ body{
     border-radius:16px;
     border:1px solid #334155;
     box-shadow:0 20px 40px rgba(0,0,0,.35);
-    transition: max-width 0.4s ease;
+    transition:max-width .4s ease;
 }
 
-/* 🚀 डैशबोर्ड एक्टिव होने पर पूरा चौड़ा (95%) करने के लिए ताकि स्लाइडर हट जाए */
-.app.wide-mode {
-    max-width: 95% !important;
+.app.wide-mode{
+    max-width:95%;
 }
 
-/* स्क्रीन्स को छुपाने के लिए सबसे जरूरी क्लास */
 .hidden{
     display:none !important;
 }
@@ -50,6 +48,7 @@ body{
     font-weight:bold;
     background:linear-gradient(to right,#60a5fa,#34d399);
     -webkit-background-clip:text;
+    background-clip:text;
     color:transparent;
     margin-bottom:10px;
 }
@@ -76,6 +75,11 @@ button{
 
 button:active{
     transform:scale(.98);
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
 .student{
@@ -166,7 +170,8 @@ input:focus{
 #strength-bar{
     height:100%;
     width:0;
-    transition: width 0.3s ease;
+    background:#ef4444;
+    transition:width .3s ease;
 }
 
 #strength-text{
@@ -242,16 +247,15 @@ input:focus{
     margin:10px;
 }
 
-/* 🚀 स्लाइडर बार हटाने के लिए टेबल कंटेनर सेटिंग्स */
 .dashboard{
-    overflow-x: visible !important;
-    margin-top: 15px;
-    width: 100%;
+    overflow-x:auto;
+    margin-top:15px;
+    width:100%;
 }
 
 table{
     width:100%;
-    min-width: 100% !important;
+    min-width:760px;
     border-collapse:collapse;
     background:#0f172a;
     font-size:12px;
@@ -275,7 +279,7 @@ td{
 .actions{
     display:flex;
     gap:8px;
-    margin-top: 15px;
+    margin-top:15px;
 }
 
 .actions button{
@@ -297,14 +301,32 @@ td{
     font-weight:bold;
 }
 
-.summary-box {
-    background: #0f172a;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    text-align: center;
-    font-size: 14px;
-    border: 1px solid #334155;
+.summary-box{
+    background:#0f172a;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:15px;
+    text-align:center;
+    font-size:14px;
+    border:1px solid #334155;
+}
+
+.status-badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:12px;
+    font-size:10px;
+}
+
+@media(max-width:700px){
+    .app.wide-mode{
+        max-width:100%;
+        padding:15px;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
 }
 </style>
 </head>
@@ -313,97 +335,274 @@ td{
 
 <div class="app" id="appContainer">
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 <div id="home">
     <h1 class="title">Cyber Hygiene Assessment</h1>
-    <p class="subtitle">Welcome! Please select your role to check your secure presence.</p>
-    <button class="student" id="studentBtn" onclick="selectRole('Student')">👨‍🎓 Student</button>
-    <button class="faculty" id="facultyBtn" onclick="selectRole('Faculty')">👩‍🏫 Faculty</button>
+
+    <p class="subtitle">
+        Welcome! Please select your role to check your secure presence.
+    </p>
+
+    <button class="student"
+            id="studentBtn"
+            onclick="selectRole('Student')">
+        👨‍🎓 Student
+    </button>
+
+    <button class="faculty"
+            id="facultyBtn"
+            onclick="selectRole('Faculty')">
+        👩‍🏫 Faculty
+    </button>
+
     <div class="admin">
-        <button class="gray" id="adminBtn" onclick="showScreen('adminLogin')">🔑 Admin Login</button>
+        <button class="gray"
+                id="adminBtn"
+                onclick="showScreen('adminLogin')">
+            🔑 Admin Login
+        </button>
     </div>
 </div>
 
-<!-- ================= PROFILE ================= -->
+<!-- PROFILE -->
 <div id="profile" class="hidden">
+
     <div class="header">
         <h2>Step 1: Profile Setup</h2>
         <span id="roleBadge" class="badge">Student</span>
     </div>
-    <label>Full Name</label>
-    <input type="text" id="username" placeholder="Enter your name">
-    <button class="next" id="profileNext" onclick="nextToPassword()">Next: Password Strength ➡️</button>
+
+    <label for="username">Full Name</label>
+
+    <input
+        type="text"
+        id="username"
+        placeholder="Enter your name"
+        maxlength="80"
+        autocomplete="name"
+    >
+
+    <button
+        class="next"
+        id="profileNext"
+        onclick="nextToPassword()">
+        Next: Password Strength ➡️
+    </button>
+
+    <button
+        class="gray"
+        onclick="showScreen('home')">
+        Back
+    </button>
+
 </div>
 
-<!-- ================= PASSWORD ================= -->
+<!-- PASSWORD -->
 <div id="passwordScreen" class="hidden">
+
     <div class="header">
         <h2>Step 2: Password Tester</h2>
         <span class="badge">Security</span>
     </div>
-    <p class="subtitle">Test your password strength locally. Your actual password is never stored.</p>
-    <label>Test Password</label>
-    <input type="password" id="password" placeholder="Enter password" oninput="checkPasswordStrength()">
+
+    <p class="subtitle">
+        Test your password strength locally.
+        Your actual password is never stored.
+    </p>
+
+    <label for="password">Test Password</label>
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter password"
+        autocomplete="new-password"
+        oninput="checkPasswordStrength()"
+    >
+
     <div id="strength-bar-bg">
         <div id="strength-bar"></div>
     </div>
+
     <p id="strength-text">Enter password to test strength</p>
-    <button class="next" id="passwordNext" onclick="nextToTracker()">Next: Call Tracker ➡️</button>
+
+    <button
+        class="next"
+        id="passwordNext"
+        onclick="nextToTracker()">
+        Next: Call Tracker ➡️
+    </button>
+
+    <button
+        class="gray"
+        onclick="showScreen('profile')">
+        Back
+    </button>
+
 </div>
 
-<!-- ================= SPAM ================= -->
+<!-- SPAM -->
 <div id="spamScreen" class="hidden">
+
     <div class="header">
         <h2>Step 3: Spam Call Analysis</h2>
         <span class="badge">Safety</span>
     </div>
-    <p class="subtitle">Check basic warning patterns in an unknown number.</p>
-    <label>Unknown Phone Number</label>
-    <input type="tel" id="phone" placeholder="Enter phone number">
-    <button class="gray" id="checkSpamBtn" onclick="checkSpam()">🔍 Check Number</button>
+
+    <p class="subtitle">
+        Check basic warning patterns in an unknown number.
+    </p>
+
+    <label for="phone">Unknown Phone Number</label>
+
+    <input
+        type="tel"
+        id="phone"
+        placeholder="Enter phone number"
+        inputmode="numeric"
+        maxlength="15"
+    >
+
+    <button
+        class="gray"
+        id="checkSpamBtn"
+        onclick="checkSpam()">
+        🔍 Check Number
+    </button>
+
     <div id="spamResult" class="result hidden"></div>
-    <button class="next" id="quizNext" onclick="nextToQuiz()">Next: Start Quiz 🧠</button>
+
+    <button
+        class="next"
+        id="quizNext"
+        onclick="nextToQuiz()">
+        Next: Start Quiz 🧠
+    </button>
+
+    <button
+        class="gray"
+        onclick="showScreen('passwordScreen')">
+        Back
+    </button>
+
 </div>
 
-<!-- ================= QUIZ ================= -->
+<!-- QUIZ -->
 <div id="quizScreen" class="hidden">
+
     <div class="header">
         <h2>Step 4: Awareness Test</h2>
         <span class="badge">15 Questions</span>
     </div>
+
     <div id="questions"></div>
-    <button class="red" id="submitBtn" onclick="submitFinalData()">🔒 SUBMIT ASSESSMENT</button>
+
+    <button
+        class="red"
+        id="submitBtn"
+        onclick="submitFinalData()">
+        🔒 SUBMIT ASSESSMENT
+    </button>
+
+    <button
+        class="gray"
+        onclick="showScreen('spamScreen')">
+        Back
+    </button>
+
 </div>
 
-<!-- ================= RESULT SCREEN ================= -->
+<!-- RESULT -->
 <div id="resultScreen" class="hidden">
+
     <div class="success">
+
         <h2>Assessment Completed!</h2>
-        <p>Thank you for contributing to campus cyber hygiene.</p>
-        <div class="score" id="finalScore">0/15</div>
-        <p id="finalScorePercent">(0%)</p>
-        <button class="student" id="backHomeBtn" onclick="resetFormToHome()">Back to Home</button>
+
+        <p>
+            Thank you for contributing to campus cyber hygiene.
+        </p>
+
+        <div class="score" id="finalScore">
+            0/15
+        </div>
+
+        <p id="finalScorePercent">
+            (0%)
+        </p>
+
+        <button
+            class="student"
+            id="backHomeBtn"
+            onclick="resetFormToHome()">
+            Back to Home
+        </button>
+
     </div>
+
 </div>
 
-<!-- ================= ADMIN LOGIN ================= -->
+<!-- ADMIN LOGIN -->
 <div id="adminLogin" class="hidden">
-    <h2 style="text-align:center;color:#fbbf24;">Admin Authentication</h2>
-    <p class="subtitle">Enter administrator access code.</p>
-    <input type="password" id="adminPassword" placeholder="Enter Secret Code">
-    <button class="yellow" id="unlockBtn" onclick="tryUnlockAdmin()">Unlock</button>
-    <button class="gray" id="cancelAdminBtn" onclick="showScreen('home')">Cancel</button>
+
+    <h2 style="text-align:center;color:#fbbf24;">
+        Admin Authentication
+    </h2>
+
+    <p class="subtitle">
+        Enter administrator access code.
+    </p>
+
+    <input
+        type="password"
+        id="adminPassword"
+        placeholder="Enter Secret Code"
+        autocomplete="off"
+    >
+
+    <button
+        class="yellow"
+        id="unlockBtn"
+        onclick="tryUnlockAdmin()">
+        Unlock
+    </button>
+
+    <button
+        class="gray"
+        id="cancelAdminBtn"
+        onclick="showScreen('home')">
+        Cancel
+    </button>
+
 </div>
 
-<!-- ================= ADMIN DASHBOARD ================= -->
+<!-- ADMIN DASHBOARD -->
 <div id="dashboard" class="hidden">
+
     <div class="header">
-        <h2 style="color:#fbbf24;">📊 Master Dashboard</h2>
-        <button class="gray" id="logoutBtn" style="width:auto;padding:7px 12px;margin:0;" onclick="showScreen('home')">Logout</button>
+
+        <h2 style="color:#fbbf24;">
+            📊 Master Dashboard
+        </h2>
+
+        <button
+            class="gray"
+            id="logoutBtn"
+            style="width:auto;padding:7px 12px;margin:0;"
+            onclick="adminLogout()">
+            Logout
+        </button>
+
     </div>
-    <div id="summary" class="summary-box"></div>
+
+    <div id="summary" class="summary-box">
+        Loading analytics...
+    </div>
+
     <div class="dashboard">
+
         <table>
+
             <thead>
                 <tr>
                     <th>Name</th>
@@ -414,26 +613,45 @@ td{
                     <th>Date & Time</th>
                 </tr>
             </thead>
+
             <tbody id="dashboardBody">
-                <!-- लाइव डेटा यहाँ लोड होगा -->
             </tbody>
+
         </table>
+
     </div>
+
     <div class="actions">
-        <button class="student" id="refreshBtn" onclick="loadAdminDashboard()">🔄 Refresh Cloud</button>
-        <button class="red" id="clearBtn" onclick="clearLogsCache()">🗑️ Clear Cache</button>
+
+        <button
+            class="student"
+            id="refreshBtn"
+            onclick="loadAdminDashboard()">
+            🔄 Refresh Cloud
+        </button>
+
+        <button
+            class="red"
+            id="clearBtn"
+            onclick="clearLogsCache()">
+            🗑️ Clear Cache
+        </button>
+
     </div>
-</div>
 
 </div>
 
-<!-- Firebase CDN SDKs -->
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<!-- Firebase Configuration -->
 <script src="firebase.js"></script>
 
-<!-- ================= CORE LOGIC JAVASCRIPT ================= -->
-<script>
-let userData = { name: "", role: "", passwordStrength: "Weak", spamNumber: "None", score: 0 };
+<!-- Application Logic -->
+<script src="app.js"></script>
 
-const quizQuestions = [
+</body>
+</html>
