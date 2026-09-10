@@ -36,6 +36,12 @@
             max-width: 560px;
             margin: 0 auto;
             padding: 25px 15px 50px;
+            transition: max-width 0.4s ease; /* चौड़ाई बदलने के लिए एनीमेशन */
+        }
+
+        /* 🚀 डैशबोर्ड एक्टिव होने पर पूरा चौड़ा करने के लिए ताकि स्लाइडर हट जाए */
+        .app.wide-mode {
+            max-width: 98% !important;
         }
 
         .card {
@@ -289,15 +295,16 @@
             margin-bottom: 18px;
         }
 
+        /* 🚀 हॉरिजॉन्टल स्लाइडर बार हटाने के लिए टेबल कंटेनर सेटिंग्स */
         .dashboard {
             width: 100%;
-            overflow-x: auto;
+            overflow-x: visible !important;
             margin-top: 20px;
         }
 
         table {
             width: 100%;
-            min-width: 850px;
+            min-width: 100% !important; /* फ्लूइड चौड़ाई */
             border-collapse: collapse;
         }
 
@@ -336,9 +343,12 @@
         }
 
         @media (max-width: 600px) {
-
             .app {
                 padding: 12px 10px 35px;
+            }
+
+            .app.wide-mode {
+                max-width: 100% !important;
             }
 
             .card {
@@ -374,6 +384,10 @@
             .score {
                 font-size: 48px;
             }
+            
+            .dashboard {
+                overflow-x: auto !important; /* मोबाइल पर जबरन रिस्पॉन्सिव स्क्रॉल */
+            }
         }
     </style>
 </head>
@@ -382,423 +396,185 @@
 
     <div class="app" id="appContainer">
 
-        <!-- =========================
-             HOME
-        ========================== -->
-        <section id="home" class="card">
-
+        <!-- ================= HOME ================= -->
+        <div id="home" class="card">
             <div class="logo">🛡️</div>
-
-            <h1>Cyber Hygiene</h1>
-
-            <p class="subtitle">
-                Cyber Hygiene Assessment Portal
-            </p>
-
-            <p class="center">
-                Test your cybersecurity awareness,
-                check your digital safety habits,
-                and improve your cyber hygiene.
-            </p>
-
-            <h3>Select Your Role</h3>
-
+            <h1>Cyber Hygiene Portal</h1>
+            <p class="subtitle">Evaluate and improve your security presence on campus.</p>
+            
+            <label class="field-label center">Select Your Role to Begin</label>
             <div class="role-buttons">
-
-                <button onclick="selectRole('Student')">
-                    🎓 Student
-                </button>
-
-                <button onclick="selectRole('Teacher')">
-                    👨‍🏫 Teacher
-                </button>
-
+                <button onclick="selectRole('Student')">👨‍🎓 Student</button>
+                <button onclick="selectRole('Faculty')" class="secondary">An Faculty</button>
             </div>
-
-            <button
-                class="secondary"
-                onclick="openAdminLogin()"
-            >
-                🔐 Admin Dashboard
-            </button>
-
-            <div class="footer-note">
-                Stay aware. Stay secure. Stay cyber smart.
+            
+            <div class="admin">
+                <button class="secondary" onclick="showScreen('adminLogin')">🔑 Admin Authentication</button>
             </div>
-
-        </section>
-
-
-        <!-- =========================
-             PROFILE 
-        ========================== -->
-        <section id="profile" class="card hidden">
-
-            <span class="badge" id="roleBadge">
-                Role
-            </span>
-
-            <h2>👤 Your Profile</h2>
-
-            <p>
-                Enter your name to continue with the assessment.
-            </p>
-
-            <label
-                class="field-label"
-                for="username"
-            >
-                Your Name
-            </label>
-
-            <input
-                id="username"
-                type="text"
-                placeholder="Enter your name"
-                maxlength="50"
-                autocomplete="name"
-            >
-
-            <button onclick="nextToPassword()">
-                Continue →
-            </button>
-
-            <button
-                class="secondary"
-                onclick="goHome()"
-            >
-                ← Back
-            </button>
-
-        </section>
-
-
-        <!-- =========================
-             PASSWORD CHECK
-        ========================== -->
-        <section
-            id="passwordScreen"
-            class="card hidden"
-        >
-
-            <h2>🔑 Password Strength</h2>
-
-            <p>
-                Enter a <b>sample password</b> to test its strength.
-                Never enter your real password here.
-            </p>
-
-            <label
-                class="field-label"
-                for="password"
-            >
-                Sample Password
-            </label>
-
-            <input
-                id="password"
-                type="password"
-                placeholder="Enter a sample password"
-                autocomplete="off"
-            >
-
-            <button onclick="checkPasswordStrength()">
-                Check Password Strength
-            </button>
-
-            <div
-                id="passwordResult"
-                class="result-box"
-            >
-                Start by entering a sample password.
-            </div>
-
-            <button onclick="nextToSpam()">
-                Continue →
-            </button>
-
-            <button
-                class="secondary"
-                onclick="showSection('profile')"
-            >
-                ← Back
-            </button>
-
-        </section>
-
-
-        <!-- =========================
-             SPAM CHECK
-        ========================== -->
-        <section
-            id="spamScreen"
-            class="card hidden"
-        >
-
-            <h2>📱 Spam Number Check</h2>
-
-            <p>
-                Enter a phone number to check for
-                simple suspicious patterns.
-            </p>
-
-            <label
-                class="field-label"
-                for="phone"
-            >
-                Phone Number
-            </label>
-
-            <input
-                id="phone"
-                type="tel"
-                placeholder="Enter phone number"
-                autocomplete="tel"
-            >
-
-            <button
-                id="checkSpamBtn"
-                onclick="checkSpam()"
-            >
-                Check Number
-            </button>
-
-            <div
-                id="spamResult"
-                class="result-box"
-            >
-                Enter a number to check.
-            </div>
-
-            <button onclick="nextToQuiz()">
-                Start Quiz →
-            </button>
-
-            <button
-                class="secondary"
-                onclick="showSection('passwordScreen')"
-            >
-                ← Back
-            </button>
-
-        </section>
-
-
-        <!-- =========================
-             QUIZ
-        ========================== -->
-        <section
-            id="quizScreen"
-            class="card hidden"
-        >
-
-            <h2>🧠 Cyber Hygiene Quiz</h2>
-
-            <p>
-                Answer all questions and submit your assessment.
-            </p>
-
-            <div class="progress-container">
-                <div id="progressBar"></div>
-            </div>
-
-            <div id="questions"></div>
-
-            <button
-                id="submitBtn"
-                onclick="submitAssessment()"
-            >
-                Submit Assessment
-            </button>
-
-            <button
-                class="secondary"
-                onclick="showSection('spamScreen')"
-            >
-                ← Back
-            </button>
-
-        </section>
-
-
-        <!-- =========================
-             RESULT
-        ========================== -->
-        <section
-            id="resultScreen"
-            class="card hidden"
-        >
-
-            <h2 class="center">
-                🎉 Assessment Complete
-            </h2>
-
-            <p class="center">
-                Your cybersecurity awareness score is:
-            </p>
-
-            <div
-                id="finalScore"
-                class="score"
-            >
-                0/15
-            </div>
-
-            <div
-                id="finalScorePercent"
-                class="result-box center"
-            >
-                Your result will appear here.
-            </div>
-
-            <button
-                id="backHomeBtn"
-                onclick="resetApp()"
-            >
-                🏠 Back to Home
-            </button>
-
-        </section>
-
-
-        <!-- =========================
-             ADMIN LOGIN
-        ========================== -->
-        <section
-            id="adminLogin"
-            class="card hidden"
-        >
-
-            <h2>🔐 Admin Login</h2>
-
-            <p>
-                Enter the admin code to open the dashboard.
-            </p>
-
-            <label
-                class="field-label"
-                for="adminPassword"
-            >
-                Admin Code
-            </label>
-
-            <input
-                id="adminPassword"
-                type="password"
-                placeholder="Enter admin code"
-                autocomplete="off"
-            >
-
-            <button
-                id="unlockBtn"
-                onclick="tryUnlockAdmin()"
-            >
-                Unlock Dashboard
-            </button>
-
-            <div
-                id="adminError"
-                class="error"
-            ></div>
-
-            <button
-                id="cancelAdminBtn"
-                class="secondary"
-                onclick="goHome()"
-            >
-                Cancel
-            </button>
-
-        </section>
-
-
-        <!-- =========================
-             ADMIN DASHBOARD
-        ========================== -->
-        <section
-            id="dashboard"
-            class="card hidden"
-        >
-
-            <div class="top-bar">
-
-                <div>
-                    <h2>📊 Admin Dashboard</h2>
-
-                    <div class="small">
-                        Cyber Hygiene Assessment Records
-                    </div>
-                </div>
-
-                <button
-                    class="secondary"
-                    onclick="adminLogout()"
-                >
-                    Logout
-                </button>
-
-            </div>
-
-
-            <div
-                id="summary"
-                class="summary-box"
-            >
-                Loading analytics...
-            </div>
-
-
-            <button onclick="loadDashboard()">
-                🔄 Refresh Dashboard
-            </button>
-
-
-            <div class="dashboard">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Password</th>
-                            <th>Spam</th>
-                            <th>Score</th>
-                            <th>Date</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="dashboardBody">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-    </div>
-
-
-    <!-- ======================================
-         FIREBASE SDK
-    ======================================= -->
-
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-
-    <!-- ======================================
-         YOUR JAVASCRIPT FILES
-    ======================================= -->
-
-    <script src="./firebase.js"></script>
-
-    <script src="./app.js"></script>
-
+        </div>
+
+        <!-- ================= PROFILE SETUP ================= -->
+        <div id="profile" class="card hidden">
+            <div class="badge" id="roleBadge">Student</div>
+            <h2>Step 1: Profile Details</h2>
+            <p>Please enter your identification name for dashboard documentation.</p>
+            
+            <label class="field-label">Full Name</label>
+            <input type="text" id="username" placeholder="Enter your full name">
+                    // 🚀 "Saving..." पर कभी न अटकने वाला नया फ़ेल-सेफ़ क्लाउड सबमिशन लॉजिक
+        function submitFinalData() {
+            let calculatedScore = 0;
+            quizQuestions.forEach((currentQ, qIdx) => {
+                const selected = document.querySelector(`input[name="question_${qIdx}"]:checked`);
+                if (selected && parseInt(selected.value) === currentQ.a) { 
+                    calculatedScore++; 
+                }
+            });
+
+            const percentage = Math.round((calculatedScore / quizQuestions.length) * 100);
+            const recordData = {
+                name: userData.name,
+                role: userData.role,
+                passwordStrength: userData.passwordStrength,
+                spamStatus: userData.spamNumber,
+                score: `${calculatedScore}/${quizQuestions.length} (${percentage}%)`,
+                rawScore: calculatedScore,
+                timestamp: new Date().toLocaleString()
+            };
+
+            const subBtn = document.getElementById('submitBtn');
+            if (subBtn) {
+                subBtn.innerText = "Saving Data Matrix...";
+                subBtn.disabled = true;
+            }
+
+            // 💾 डेटा तुरंत स्थानीय बैकअप मेमोरी में सहेजें ताकि रिकॉर्ड खो न जाए
+            saveToBackup(recordData);
+
+            // ☁️ फायरबेस सिंक ऑपरेशन (1.5 सेकंड की डेडलाइन के साथ)
+            if (typeof db !== 'undefined' && db !== null) {
+                const timeoutTracker = setTimeout(() => {
+                    console.log("Database delay threshold bypassed. Forcing local cache view.");
+                    if (subBtn) { subBtn.disabled = false; subBtn.innerText = "🔒 SUBMIT ASSESSMENT"; }
+                    showResultsPage(calculatedScore, percentage);
+                }, 1500);
+
+                db.collection("assessments").add(recordData)
+                .then(() => { 
+                    clearTimeout(timeoutTracker);
+                    if (subBtn) { subBtn.disabled = false; subBtn.innerText = "🔒 SUBMIT ASSESSMENT"; }
+                    showResultsPage(calculatedScore, percentage); 
+                })
+                .catch((e) => { 
+                    clearTimeout(timeoutTracker);
+                    console.error("Cloud Sync Error: ", e);
+                    if (subBtn) { subBtn.disabled = false; subBtn.innerText = "🔒 SUBMIT ASSESSMENT"; }
+                    showResultsPage(calculatedScore, percentage); 
+                });
+            } else {
+                setTimeout(() => {
+                    if (subBtn) { subBtn.disabled = false; subBtn.innerText = "🔒 SUBMIT ASSESSMENT"; }
+                    showResultsPage(calculatedScore, percentage);
+                }, 800);
+            }
+        }
+
+        function saveToBackup(data) {
+            let localRecords = JSON.parse(localStorage.getItem('cyberHygieneRecords')) || [];
+            localRecords.push(data);
+            localStorage.setItem('cyberHygieneRecords', JSON.stringify(localRecords));
+        }
+
+        function showResultsPage(score, percent) {
+            document.getElementById('finalScore').innerText = `${score}/${quizQuestions.length}`;
+            document.getElementById('finalScorePercent').innerText = `(${percent}%)`;
+            showScreen('resultScreen');
+        }
+
+        function resetFormToHome() {
+            if(document.getElementById('username')) document.getElementById('username').value = '';
+            if(document.getElementById('password')) document.getElementById('password').value = '';
+            if(document.getElementById('phone')) document.getElementById('phone').value = '';
+            if(document.getElementById('spamResult')) document.getElementById('spamResult').classList.add('hidden');
+            showScreen('home');
+        }
+
+        function tryUnlockAdmin() {
+            const passInput = document.getElementById('adminPassword');
+            if (passInput && passInput.value === "admin123") {
+                passInput.value = '';
+                showScreen('dashboard');
+                loadAdminDashboard();
+            } else {
+                alert("Access Denied: Incorrect Administrative Token Code!");
+            }
+        }
+
+        function loadAdminDashboard() {
+            const tbody = document.getElementById('dashboardBody');
+            const summary = document.getElementById('summary');
+            if (!tbody) return;
+
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Synchronizing dashboard view matrix...</td></tr>`;
+
+            const renderTable = (records) => {
+                tbody.innerHTML = '';
+                if (records.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="empty">No execution logs registered in current matrix.</td></tr>`;
+                    if (summary) summary.innerHTML = `Total Audits: 0 | Core Average Ratio: 0%`;
+                    return;
+                }
+
+                let totalScore = 0;
+                records.forEach(row => {
+                    totalScore += (row.rawScore || 0);
+                    let passStyle = row.passwordStrength === 'Strong' ? 'success' : (row.passwordStrength === 'Medium' ? 'warning' : 'error');
+                    let spamStyle = row.spamStatus && row.spamStatus.includes('Clear') ? 'success' : 'error';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><b>${row.name}</b></td>
+                        <td>${row.role}</td>
+                        <td class="${passStyle}">${row.passwordStrength}</td>
+                        <td class="${spamStyle}">${row.spamStatus || 'Unverified'}</td>
+                        <td style="color:#607cff;font-weight:bold;">${row.score}</td>
+                        <td style="color:#8997b6;">${row.timestamp || ''}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                const avgPercent = Math.round(((totalScore / (records.length * quizQuestions.length)) * 100));
+                if (summary) summary.innerHTML = `Total Log Assessments: <span style="color:#607cff;font-weight:bold;">${records.length}</span> &nbsp;&nbsp;|&nbsp;&nbsp; Metrics Group Average: <span style="color:#6ee7a1;font-weight:bold;">${avgPercent}%</span>`;
+            };
+
+            if (typeof db !== 'undefined' && db !== null) {
+                db.collection("assessments").get()
+                .then((querySnapshot) => {
+                    let cloudRecords = [];
+                    querySnapshot.forEach((doc) => { doc.data() && cloudRecords.push(doc.data()); });
+                    renderTable(cloudRecords.reverse());
+                })
+                .catch(() => {
+                    let localRecords = JSON.parse(localStorage.getItem('cyberHygieneRecords')) || [];
+                    renderTable(localRecords.slice().reverse());
+                });
+            } else {
+                let localRecords = JSON.parse(localStorage.getItem('cyberHygieneRecords')) || [];
+                renderTable(localRecords.slice().reverse());
+            }
+        }
+
+        function clearLogsCache() {
+            if (confirm("Execute total purge protocol on local data registers?")) {
+                localStorage.removeItem('cyberHygieneRecords');
+                loadAdminDashboard();
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            showScreen('home');
+        });
+    </script>
 </body>
 </html>
+
