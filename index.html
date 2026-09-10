@@ -1,405 +1,401 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>Cyber Hygiene Assessment</title>
+    <title>Cyber Hygiene Assessment</title>
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    html {
-        scroll-behavior: smooth;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: Arial, Helvetica, sans-serif;
-        background:
-            radial-gradient(circle at top left, #18264d 0%, transparent 35%),
-            radial-gradient(circle at bottom right, #151d3d 0%, transparent 35%),
-            #080d1c;
-        color: #ffffff;
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top left, #18264d 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #151d3d 0%, transparent 35%),
+                #080d1c;
+            color: #ffffff;
+            padding: 15px;
+        }
 
-    button,
-    input {
-        font-family: inherit;
-    }
+        button,
+        input {
+            font-family: inherit;
+        }
 
-    .app {
-        width: 100%;
-        max-width: 560px;
-        margin: 0 auto;
-        padding: 25px 15px 50px;
-        transition: max-width 0.4s ease;
-    }
-
-    .app.wide-mode {
-        max-width: 98% !important;
-    }
-
-    .card {
-        background: rgba(19, 27, 50, 0.96);
-        border: 1px solid #2c3a60;
-        border-radius: 20px;
-        padding: 28px;
-        margin-top: 20px;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
-    }
-
-    .hidden {
-        display: none !important;
-    }
-
-    h1 {
-        text-align: center;
-        font-size: 34px;
-        margin: 5px 0 12px;
-    }
-
-    h2 {
-        font-size: 26px;
-        margin: 0 0 12px;
-    }
-
-    h3 {
-        margin: 0 0 12px;
-    }
-
-    p {
-        color: #b9c5df;
-        line-height: 1.6;
-    }
-
-    .center {
-        text-align: center;
-    }
-
-    .logo {
-        font-size: 60px;
-        text-align: center;
-        margin-bottom: 5px;
-    }
-
-    .subtitle {
-        text-align: center;
-        color: #aebbd7;
-        margin-bottom: 30px;
-    }
-
-    .badge {
-        display: inline-block;
-        padding: 7px 13px;
-        border-radius: 30px;
-        background: #25345c;
-        color: #bfcaff;
-        font-size: 13px;
-        margin-bottom: 18px;
-    }
-
-    label.field-label {
-        display: block;
-        margin-top: 15px;
-        margin-bottom: 7px;
-        font-weight: bold;
-    }
-
-    input[type="text"],
-    input[type="password"],
-    input[type="tel"] {
-        width: 100%;
-        padding: 14px 15px;
-        background: #0d1428;
-        color: #ffffff;
-        border: 1px solid #344568;
-        border-radius: 11px;
-        font-size: 16px;
-        outline: none;
-    }
-
-    input:focus {
-        border-color: #7189ff;
-        box-shadow: 0 0 0 3px rgba(113, 137, 255, 0.12);
-    }
-
-    button {
-        width: 100%;
-        padding: 14px 16px;
-        margin-top: 12px;
-        border: 0;
-        border-radius: 11px;
-        background: #5f78ff;
-        color: #ffffff;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s ease;
-    }
-
-    button:hover {
-        background: #7189ff;
-        transform: translateY(-1px);
-    }
-
-    button:active {
-        transform: translateY(0);
-    }
-
-    button.secondary {
-        background: #293654;
-    }
-
-    button.secondary:hover {
-        background: #344568;
-    }
-
-    button.danger {
-        background: #b74450;
-    }
-
-    .role-buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-top: 18px;
-    }
-
-    .role-buttons button {
-        margin-top: 0;
-    }
-
-    .result-box {
-        background: #0d1428;
-        border: 1px solid #2e3c60;
-        border-radius: 12px;
-        padding: 16px;
-        margin-top: 15px;
-        color: #d8e0f5;
-        line-height: 1.6;
-    }
-
-    .success {
-        color: #6ee7a1;
-        font-weight: bold;
-    }
-
-    .warning {
-        color: #ffd166;
-        font-weight: bold;
-    }
-
-    .error {
-        color: #ff7474;
-        font-weight: bold;
-    }
-
-    .info {
-        color: #9fb2ff;
-    }
-
-    .progress-container {
-        width: 100%;
-        height: 10px;
-        background: #273554;
-        border-radius: 20px;
-        overflow: hidden;
-        margin: 18px 0 25px;
-    }
-
-    #progressBar {
-        height: 100%;
-        width: 0%;
-        background: #607cff;
-        border-radius: 20px;
-        transition: width 0.25s ease;
-    }
-
-    .question {
-        background: #0d1428;
-        border: 1px solid #2d3b5e;
-        border-radius: 14px;
-        padding: 18px;
-        margin-bottom: 16px;
-        text-align: left;
-    }
-
-    .question h3 {
-        font-size: 17px;
-        line-height: 1.5;
-        color: #ffffff;
-    }
-
-    .option {
-        display: block;
-        background: #151e36;
-        border: 1px solid transparent;
-        border-radius: 9px;
-        padding: 11px;
-        margin-top: 8px;
-        color: #d6deef;
-        cursor: pointer;
-    }
-
-    .option:hover {
-        background: #1c2947;
-        border-color: #3b4c75;
-    }
-
-    .option input[type="radio"] {
-        width: auto;
-        margin: 0 8px 0 0;
-        vertical-align: middle;
-        accent-color: #6d84ff;
-    }
-
-    .score {
-        text-align: center;
-        font-size: 58px;
-        font-weight: bold;
-        color: #7890ff;
-        margin: 25px 0;
-    }
-
-    .top-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-
-    .top-bar h2 {
-        margin-bottom: 4px;
-    }
-
-    .top-bar button {
-        width: auto;
-        margin: 0;
-        padding: 10px 15px;
-    }
-
-    .small {
-        font-size: 18px;
-        color: #8997b6;
-    }
-
-    .summary-box {
-        background: #0d1428;
-        border: 1px solid #2d3b5e;
-        border-radius: 14px;
-        padding: 18px;
-        line-height: 2;
-        margin-bottom: 18px;
-    }
-
-    .dashboard {
-        width: 100%;
-        overflow-x: auto;
-        margin-top: 20px;
-    }
-
-    table {
-        width: 100%;
-        min-width: 850px;
-        border-collapse: collapse;
-    }
-
-    th,
-    td {
-        padding: 13px 12px;
-        border-bottom: 1px solid #2c395b;
-        text-align: left;
-    }
-
-    th {
-        background: #202b49;
-        color: #ffffff;
-    }
-
-    td {
-        color: #c5d0e6;
-        background: #111a30;
-    }
-
-    tr:hover td {
-        background: #17223b;
-    }
-
-    .empty {
-        text-align: center;
-        color: #929fbc;
-        padding: 25px;
-    }
-
-    .footer-note {
-        text-align: center;
-        color: #707e9d;
-        font-size: 12px;
-        margin-top: 25px;
-    }
-
-    @media (max-width: 600px) {
         .app {
-            padding: 12px 10px 35px;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 10px;
+            transition: max-width 0.4s ease;
         }
 
         .app.wide-mode {
-            max-width: 100% !important;
+            max-width: 98% !important;
         }
 
         .card {
-            padding: 20px 16px;
-            border-radius: 16px;
+            background: rgba(19, 27, 50, 0.96);
+            border: 1px solid #2c3a60;
+            border-radius: 20px;
+            padding: 28px;
+            margin-top: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         h1 {
-            font-size: 28px;
+            text-align: center;
+            font-size: 34px;
+            margin: 5px 0 12px;
         }
 
         h2 {
-            font-size: 23px;
+            font-size: 26px;
+            margin: 0 0 12px;
+        }
+
+        h3 {
+            margin: 0 0 12px;
+        }
+
+        p {
+            color: #b9c5df;
+            line-height: 1.6;
+        }
+
+        .center {
+            text-align: center;
         }
 
         .logo {
-            font-size: 50px;
+            font-size: 60px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aebbd7;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 30px;
+            background: #25345c;
+            color: #bfcaff;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        label.field-label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 14px 15px;
+            background: #0d1428;
+            color: #ffffff;
+            border: 1px solid #344568;
+            border-radius: 11px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #7189ff;
+            box-shadow: 0 0 0 3px rgba(113, 137, 255, 0.12);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px 16px;
+            margin-top: 12px;
+            border: 0;
+            border-radius: 11px;
+            background: #5f78ff;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        button:hover {
+            background: #7189ff;
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: #293654;
+        }
+
+        button.secondary:hover {
+            background: #344568;
+        }
+
+        button.danger {
+            background: #b74450;
         }
 
         .role-buttons {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 18px;
         }
 
-        .top-bar {
-            align-items: flex-start;
-            flex-direction: column;
+        .role-buttons button {
+            margin-top: 0;
         }
 
-        .top-bar button {
+        .result-box {
+            background: #0d1428;
+            border: 1px solid #2e3c60;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 15px;
+            color: #d8e0f5;
+            line-height: 1.6;
+        }
+
+        .success {
+            color: #6ee7a1;
+            font-weight: bold;
+        }
+
+        .warning {
+            color: #ffd166;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #ff7474;
+            font-weight: bold;
+        }
+
+        .info {
+            color: #9fb2ff;
+        }
+
+        .progress-container {
             width: 100%;
+            height: 10px;
+            background: #273554;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 18px 0 25px;
+        }
+
+        #progressBar {
+            height: 100%;
+            width: 0%;
+            background: #607cff;
+            border-radius: 20px;
+            transition: width 0.25s ease;
+        }
+
+        .question {
+            background: #0d1428;
+            border: 1px solid #2d3b5e;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .question h3 {
+            font-size: 17px;
+            line-height: 1.5;
+            color: #ffffff;
+        }
+
+        .option {
+            display: block;
+            background: #151e36;
+            border: 1px solid transparent;
+            border-radius: 9px;
+            padding: 11px;
+            margin-top: 8px;
+            color: #d6deef;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #1c2947;
+            border-color: #3b4c75;
+        }
+
+        .option input[type="radio"] {
+            width: auto;
+            margin: 0 8px 0 0;
+            vertical-align: middle;
+            accent-color: #6d84ff;
         }
 
         .score {
-            font-size: 48px;
+            text-align: center;
+            font-size: 58px;
+            font-weight: bold;
+            color: #7890ff;
+            margin: 25px 0;
         }
-    }
-</style>
-```
 
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .top-bar h2 {
+            margin-bottom: 4px;
+        }
+
+        .top-bar button {
+            width: auto;
+            margin: 0;
+            padding: 10px 15px;
+        }
+
+        .small {
+            font-size: 18px;
+            color: #8997b6;
+        }
+
+        .summary-box {
+            background: #0d1428;
+            border: 1px solid #2d3b5e;
+            border-radius: 14px;
+            padding: 18px;
+            line-height: 2;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .dashboard {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th,
+        td {
+            padding: 13px 12px;
+            border-bottom: 1px solid #2c395b;
+            text-align: left;
+        }
+
+        th {
+            background: #202b49;
+            color: #ffffff;
+        }
+
+        td {
+            color: #c5d0e6;
+            background: #111a30;
+        }
+
+        tr:hover td {
+            background: #17223b;
+        }
+
+        .empty {
+            text-align: center;
+            color: #929fbc;
+            padding: 25px;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #707e9d;
+            font-size: 12px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .app {
+                padding: 12px 10px 35px;
+            }
+
+            .app.wide-mode {
+                max-width: 100% !important;
+            }
+
+            .card {
+                padding: 20px 16px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 23px;
+            }
+
+            .logo {
+                font-size: 50px;
+            }
+
+            .role-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .top-bar button {
+                width: 100%;
+            }
+
+            .score {
+                font-size: 48px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-```
 <div class="app" id="appContainer">
 
-    <!-- ================= HOME ================= -->
-
+    <!-- HOME -->
     <div id="home" class="card">
 
         <div class="logo">🛡️</div>
@@ -407,7 +403,7 @@
         <h1>Cyber Hygiene Portal</h1>
 
         <p class="subtitle">
-            Evaluate and improve your security awareness.
+            Evaluate and improve your security awareness on campus.
         </p>
 
         <label class="field-label center">
@@ -415,7 +411,6 @@
         </label>
 
         <div class="role-buttons">
-
             <button onclick="selectRole('Student')">
                 👨‍🎓 Student
             </button>
@@ -427,20 +422,16 @@
                 👩‍🏫 Faculty
 
             </button>
-
         </div>
 
-        <div
-            class="admin"
-            style="
-                margin-top: 20px;
-                border-top: 1px solid #2c3a60;
-                padding-top: 15px;
-            ">
+        <div style="
+            margin-top:20px;
+            border-top:1px solid #2c3a60;
+            padding-top:15px;">
 
             <button
                 class="secondary"
-                onclick="openAdminLogin()">
+                onclick="showScreen('adminLogin')">
 
                 🔑 Admin Authentication
 
@@ -451,7 +442,7 @@
     </div>
 
 
-    <!-- ================= PROFILE ================= -->
+    <!-- PROFILE -->
 
     <div id="profile" class="card hidden">
 
@@ -480,7 +471,7 @@
 
         <button
             class="secondary"
-            onclick="goHome()">
+            onclick="showScreen('home')">
 
             ← Back
 
@@ -489,7 +480,7 @@
     </div>
 
 
-    <!-- ================= PASSWORD ================= -->
+    <!-- PASSWORD -->
 
     <div id="passwordScreen" class="card hidden">
 
@@ -497,11 +488,12 @@
             Security Step
         </div>
 
-        <h2>Step 2: Password Strength</h2>
+        <h2>
+            Step 2: Password Strength
+        </h2>
 
         <p>
             Test a sample password safely.
-            Your real password is never saved.
         </p>
 
         <label class="field-label">
@@ -514,17 +506,27 @@
             placeholder="Enter test password..."
             oninput="checkPasswordStrength()">
 
-        <div id="passwordResult" class="result-box info center">
-            Start by entering a sample password.
+        <div class="progress-container">
+
+            <div id="progressBar"></div>
+
         </div>
 
-        <button onclick="nextToSpam()">
+        <div
+            id="strengthResult"
+            class="result-box info center">
+
+            Enter password to test...
+
+        </div>
+
+        <button onclick="nextToTracker()">
             Next: Call Status Tracker ➡️
         </button>
 
         <button
             class="secondary"
-            onclick="showSection('profile')">
+            onclick="showScreen('profile')">
 
             ← Back
 
@@ -533,7 +535,7 @@
     </div>
 
 
-    <!-- ================= SPAM SCREEN ================= -->
+    <!-- SPAM CHECKER -->
 
     <div id="spamScreen" class="card hidden">
 
@@ -541,10 +543,12 @@
             Safety Scan
         </div>
 
-        <h2>Step 3: Call Spam Tracker</h2>
+        <h2>
+            Step 3: Call Status Tracker
+        </h2>
 
         <p>
-            Check a phone number for simple suspicious patterns.
+            Enter a number to perform a basic format-based safety check.
         </p>
 
         <label class="field-label">
@@ -554,7 +558,7 @@
         <input
             type="tel"
             id="phone"
-            placeholder="Enter phone number...">
+            placeholder="Enter number...">
 
         <button
             class="secondary"
@@ -564,13 +568,14 @@
 
         </button>
 
-        <div id="spamResult" class="result-box info center">
-            Enter a number to check.
+        <div
+            id="spamResult"
+            class="result-box info center hidden">
         </div>
 
         <button
             onclick="nextToQuiz()"
-            style="margin-top: 20px;">
+            style="margin-top:20px;">
 
             Next: Awareness Test 🧠
 
@@ -578,7 +583,7 @@
 
         <button
             class="secondary"
-            onclick="showSection('passwordScreen')">
+            onclick="showScreen('passwordScreen')">
 
             ← Back
 
@@ -587,7 +592,7 @@
     </div>
 
 
-    <!-- ================= QUIZ ================= -->
+    <!-- QUIZ -->
 
     <div id="quizScreen" class="card hidden">
 
@@ -595,23 +600,19 @@
             Awareness
         </div>
 
-        <h2>Step 4: Hygiene Quiz</h2>
+        <h2>
+            Step 4: Hygiene Quiz
+        </h2>
 
         <p>
-            Complete all 15 questions to finish your assessment.
+            Complete all 15 questions.
         </p>
-
-        <div class="progress-container">
-
-            <div id="progressBar"></div>
-
-        </div>
 
         <div id="questions"></div>
 
         <button
             id="submitBtn"
-            onclick="submitAssessment()">
+            onclick="submitFinalData()">
 
             🔒 SUBMIT ASSESSMENT
 
@@ -619,7 +620,7 @@
 
         <button
             class="secondary"
-            onclick="showSection('spamScreen')">
+            onclick="showScreen('spamScreen')">
 
             ← Back
 
@@ -628,7 +629,7 @@
     </div>
 
 
-    <!-- ================= RESULT ================= -->
+    <!-- RESULT -->
 
     <div
         id="resultScreen"
@@ -639,36 +640,30 @@
         </div>
 
         <h2>
-            Assessment Saved!
+            Assessment Complete!
         </h2>
 
         <p>
-            Your Cyber Hygiene Assessment has been completed.
+            Your assessment has been recorded.
         </p>
 
         <div
             id="finalScore"
             class="score">
-
-            0/15
-
         </div>
 
         <div
-            id="finalScorePercent"
-            class="result-box info">
-
+            id="summary"
+            class="summary-box">
         </div>
 
-        <button onclick="resetApp()">
-
+        <button onclick="restartAssessment()">
             🔄 Start New Assessment
-
         </button>
 
         <button
             class="secondary"
-            onclick="goHome()">
+            onclick="showScreen('home')">
 
             🏠 Home
 
@@ -677,7 +672,7 @@
     </div>
 
 
-    <!-- ================= ADMIN LOGIN ================= -->
+    <!-- ADMIN LOGIN -->
 
     <div
         id="adminLogin"
@@ -687,38 +682,31 @@
             🔐
         </div>
 
-        <h2>
+        <h2 class="center">
             Admin Authentication
         </h2>
 
-        <p>
-            Enter the admin access code to view the dashboard.
-        </p>
-
         <label class="field-label">
-            Admin Code
+            Admin Password
         </label>
 
         <input
             type="password"
             id="adminPassword"
-            placeholder="Enter admin code">
+            placeholder="Enter admin password">
 
         <div
             id="adminError"
             class="error center">
-
         </div>
 
-        <button onclick="tryUnlockAdmin()">
-
-            🔓 Unlock Dashboard
-
+        <button onclick="adminLogin()">
+            Login
         </button>
 
         <button
             class="secondary"
-            onclick="goHome()">
+            onclick="showScreen('home')">
 
             ← Back
 
@@ -727,10 +715,10 @@
     </div>
 
 
-    <!-- ================= ADMIN DASHBOARD ================= -->
+    <!-- ADMIN DASHBOARD -->
 
     <div
-        id="dashboard"
+        id="adminDashboard"
         class="card hidden">
 
         <div class="top-bar">
@@ -741,9 +729,9 @@
                     📊 Admin Dashboard
                 </h2>
 
-                <p class="small">
-                    Cyber Hygiene Assessment Records
-                </p>
+                <div class="small">
+                    Assessment Records
+                </div>
 
             </div>
 
@@ -758,13 +746,13 @@
         </div>
 
 
-        <div
-            id="summary"
-            class="summary-box">
+        <button
+            class="danger"
+            onclick="clearRecords()">
 
-            Loading analytics...
+            🗑️ Clear All Records
 
-        </div>
+        </button>
 
 
         <div class="dashboard">
@@ -776,50 +764,22 @@
                     <tr>
 
                         <th>Name</th>
-
                         <th>Role</th>
-
-                        <th>Password</th>
-
-                        <th>Phone Status</th>
-
-                        <th>Quiz Score</th>
-
+                        <th>Phone</th>
+                        <th>Score</th>
                         <th>Date</th>
 
                     </tr>
 
                 </thead>
 
-
-                <tbody id="dashboardBody">
-
-                    <tr>
-
-                        <td
-                            colspan="6"
-                            class="empty">
-
-                            No records loaded.
-
-                        </td>
-
-                    </tr>
+                <tbody id="dashboardTable">
 
                 </tbody>
 
             </table>
 
         </div>
-
-
-        <button
-            class="secondary"
-            onclick="loadDashboard()">
-
-            🔄 Refresh Dashboard
-
-        </button>
 
     </div>
 
@@ -833,22 +793,892 @@
 </div>
 
 
-<!-- ================= FIREBASE SDK ================= -->
+<script>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    /* =========================
+       APPLICATION STATE
+    ========================= */
 
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
-
-<!-- ================= YOUR FIREBASE CONFIG ================= -->
-
-<script src="firebase.js"></script>
+    let selectedRole = "";
+    let passwordScore = 0;
 
 
-<!-- ================= MAIN APP ================= -->
+    /* =========================
+       QUIZ QUESTIONS
+    ========================= */
 
-<script src="app.js"></script>
-```
+    const quizQuestions = [
+
+        {
+            question: "What should you do before clicking an unknown link?",
+            options: [
+                "Click immediately",
+                "Verify the source",
+                "Share it",
+                "Ignore all security warnings"
+            ],
+            answer: 1
+        },
+
+        {
+            question: "Which password is generally stronger?",
+            options: [
+                "123456",
+                "password",
+                "A long unique passphrase",
+                "Your first name"
+            ],
+            answer: 2
+        },
+
+        {
+            question: "What is phishing?",
+            options: [
+                "A method to trick users into giving information",
+                "A type of keyboard",
+                "A computer game",
+                "A Wi-Fi connection"
+            ],
+            answer: 0
+        },
+
+        {
+            question: "Should you reuse the same password everywhere?",
+            options: [
+                "Yes",
+                "No"
+            ],
+            answer: 1
+        },
+
+        {
+            question: "What should you do with suspicious emails?",
+            options: [
+                "Open every attachment",
+                "Verify the sender and report if suspicious",
+                "Forward them to everyone",
+                "Reply with your password"
+            ],
+            answer: 1
+        },
+
+        {
+            question: "Why are software updates important?",
+            options: [
+                "They can include security fixes",
+                "They make passwords weaker",
+                "They remove internet access",
+                "They are never useful"
+            ],
+            answer: 0
+        },
+
+        {
+            question: "What is two-factor authentication?",
+            options: [
+                "Using two usernames",
+                "An extra verification step",
+                "Sharing an account",
+                "Using two browsers"
+            ],
+            answer: 1
+        },
+
+        {
+            question: "Should you share OTP codes?",
+            options: [
+                "Yes",
+                "No"
+            ],
+            answer: 1
+        },
+
+        {
+            question: "What is safer on public Wi-Fi?",
+            options: [
+                "Accessing sensitive accounts without care",
+                "Using trusted encrypted connections and being cautious",
+                "Sharing passwords",
+                "Turning off security"
+            ],
+            answer: 1
+        },
+
+        {
+            question: "What should you do if a website looks suspicious?",
+            options: [
+                "Enter your details",
+                "Verify the website before interacting",
+                "Disable your browser security",
+                "Download everything"
+            ],
+            answer: 1
+        },
+
+        {
+            question: "Which is a good password practice?",
+            options: [
+                "Using unique passwords",
+                "Using your birthday everywhere",
+                "Sharing passwords",
+                "Writing passwords publicly"
+            ],
+            answer: 0
+        },
+
+        {
+            question: "What should you do if your account may be compromised?",
+            options: [
+                "Ignore it",
+                "Change credentials and contact the service if needed",
+                "Share your password",
+                "Delete your browser"
+            ],
+            answer: 1
+        },
+
+        {
+            question: "Why should you lock your device?",
+            options: [
+                "To help prevent unauthorized access",
+                "To slow down the device",
+                "To remove the internet",
+                "It is unnecessary"
+            ],
+            answer: 0
+        },
+
+        {
+            question: "Before installing an app, you should:",
+            options: [
+                "Check the source and permissions",
+                "Install every app immediately",
+                "Disable all security settings",
+                "Share your OTP"
+            ],
+            answer: 0
+        },
+
+        {
+            question: "What is the safest response to an unexpected request for sensitive information?",
+            options: [
+                "Send the information immediately",
+                "Verify independently before sharing anything",
+                "Post it online",
+                "Ignore security concerns"
+            ],
+            answer: 1
+        }
+
+    ];
+
+
+    /* =========================
+       SCREEN NAVIGATION
+    ========================= */
+
+    function showScreen(screenId) {
+
+        const screens = document.querySelectorAll(".card");
+
+        screens.forEach(screen => {
+
+            screen.classList.add("hidden");
+
+        });
+
+        document
+            .getElementById(screenId)
+            .classList
+            .remove("hidden");
+
+
+        const app = document.getElementById("appContainer");
+
+        if (screenId === "adminDashboard") {
+
+            app.classList.add("wide-mode");
+
+        } else {
+
+            app.classList.remove("wide-mode");
+
+        }
+
+
+        window.scrollTo({
+
+            top: 0,
+            behavior: "smooth"
+
+        });
+
+    }
+
+
+    /* =========================
+       ROLE
+    ========================= */
+
+    function selectRole(role) {
+
+        selectedRole = role;
+
+        document
+            .getElementById("roleBadge")
+            .textContent = role;
+
+        showScreen("profile");
+
+    }
+
+
+    /* =========================
+       PROFILE
+    ========================= */
+
+    function nextToPassword() {
+
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+        if (username.length < 2) {
+
+            alert("Please enter your full name.");
+
+            return;
+
+        }
+
+
+        showScreen("passwordScreen");
+
+    }
+
+
+    /* =========================
+       PASSWORD STRENGTH
+    ========================= */
+
+    function checkPasswordStrength() {
+
+        const password =
+            document
+                .getElementById("password")
+                .value;
+
+
+        let score = 0;
+
+
+        if (password.length >= 8) {
+            score++;
+        }
+
+        if (/[A-Z]/.test(password)) {
+            score++;
+        }
+
+        if (/[a-z]/.test(password)) {
+            score++;
+        }
+
+        if (/[0-9]/.test(password)) {
+            score++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(password)) {
+            score++;
+        }
+
+
+        passwordScore = score;
+
+
+        const progressBar =
+            document
+                .getElementById("progressBar");
+
+
+        const result =
+            document
+                .getElementById("strengthResult");
+
+
+        const percentage =
+            score * 20;
+
+
+        progressBar.style.width =
+            percentage + "%";
+
+
+        if (password.length === 0) {
+
+            result.innerHTML =
+                "Enter password to test...";
+
+            result.className =
+                "result-box info center";
+
+            return;
+
+        }
+
+
+        if (score <= 2) {
+
+            result.innerHTML =
+                "⚠️ Weak Password";
+
+            result.className =
+                "result-box error center";
+
+        }
+
+        else if (score <= 4) {
+
+            result.innerHTML =
+                "⚠️ Moderate Password";
+
+            result.className =
+                "result-box warning center";
+
+        }
+
+        else {
+
+            result.innerHTML =
+                "✅ Strong Password";
+
+            result.className =
+                "result-box success center";
+
+        }
+
+    }
+
+
+    function nextToTracker() {
+
+        const password =
+            document
+                .getElementById("password")
+                .value;
+
+
+        if (password.length === 0) {
+
+            alert("Please enter a sample password.");
+
+            return;
+
+        }
+
+
+        showScreen("spamScreen");
+
+    }
+
+
+    /* =========================
+       PHONE CHECK
+    ========================= */
+
+    function checkSpam() {
+
+        const phone =
+            document
+                .getElementById("phone")
+                .value
+                .trim();
+
+
+        const result =
+            document
+                .getElementById("spamResult");
+
+
+        result.classList.remove("hidden");
+
+
+        if (phone.length < 6) {
+
+            result.innerHTML =
+                "⚠️ Please enter a valid phone number format.";
+
+            result.className =
+                "result-box warning center";
+
+            return;
+
+        }
+
+
+        result.innerHTML =
+            "ℹ️ Basic format check complete. Unknown numbers should be verified before sharing personal information.";
+
+        result.className =
+            "result-box info center";
+
+    }
+
+
+    function nextToQuiz() {
+
+        if (!document.getElementById("phone").value.trim()) {
+
+            alert("Please enter a phone number for the assessment.");
+
+            return;
+
+        }
+
+
+        renderQuestions();
+
+        showScreen("quizScreen");
+
+    }
+
+
+    /* =========================
+       QUIZ RENDER
+    ========================= */
+
+    function renderQuestions() {
+
+        const container =
+            document
+                .getElementById("questions");
+
+
+        container.innerHTML = "";
+
+
+        quizQuestions.forEach((item, index) => {
+
+            const question =
+                document.createElement("div");
+
+
+            question.className =
+                "question";
+
+
+            let html =
+                `<h3>${index + 1}. ${item.question}</h3>`;
+
+
+            item.options.forEach(
+                (option, optionIndex) => {
+
+                    html += `
+
+                    <label class="option">
+
+                        <input
+                            type="radio"
+                            name="question${index}"
+                            value="${optionIndex}">
+
+                        ${option}
+
+                    </label>
+
+                    `;
+
+                }
+            );
+
+
+            question.innerHTML =
+                html;
+
+
+            container.appendChild(question);
+
+        });
+
+    }
+
+
+    /* =========================
+       SUBMIT QUIZ
+    ========================= */
+
+    function submitFinalData() {
+
+        let score = 0;
+
+
+        for (
+            let i = 0;
+            i < quizQuestions.length;
+            i++
+        ) {
+
+            const selected =
+                document.querySelector(
+                    `input[name="question${i}"]:checked`
+                );
+
+
+            if (!selected) {
+
+                alert(
+                    `Please answer Question ${i + 1}.`
+                );
+
+                return;
+
+            }
+
+
+            if (
+                Number(selected.value) ===
+                quizQuestions[i].answer
+            ) {
+
+                score++;
+
+            }
+
+        }
+
+
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+        const phone =
+            document
+                .getElementById("phone")
+                .value
+                .trim();
+
+
+        const record = {
+
+            name: username,
+
+            role: selectedRole,
+
+            phone: phone,
+
+            score: score,
+
+            total: quizQuestions.length,
+
+            date: new Date().toLocaleString()
+
+        };
+
+
+        const records =
+            JSON.parse(
+                localStorage.getItem(
+                    "cyberHygieneRecords"
+                )
+            ) || [];
+
+
+        records.push(record);
+
+
+        localStorage.setItem(
+            "cyberHygieneRecords",
+            JSON.stringify(records)
+        );
+
+
+        document
+            .getElementById("finalScore")
+            .textContent =
+            `${score} / ${quizQuestions.length}`;
+
+
+        document
+            .getElementById("summary")
+            .innerHTML = `
+
+            <strong>Name:</strong>
+            ${escapeHTML(username)}
+            <br>
+
+            <strong>Role:</strong>
+            ${escapeHTML(selectedRole)}
+            <br>
+
+            <strong>Password Test Score:</strong>
+            ${passwordScore} / 5
+            <br>
+
+            <strong>Quiz Score:</strong>
+            ${score} / ${quizQuestions.length}
+
+        `;
+
+
+        showScreen("resultScreen");
+
+    }
+
+
+    /* =========================
+       ADMIN
+    ========================= */
+
+    function adminLogin() {
+
+        const password =
+            document
+                .getElementById("adminPassword")
+                .value;
+
+
+        const error =
+            document
+                .getElementById("adminError");
+
+
+        /*
+         DEMO ONLY
+
+         This password is visible in client-side code.
+         For a real website, use Firebase Authentication
+         or a secure backend.
+        */
+
+        const DEMO_ADMIN_PASSWORD =
+            "admin123";
+
+
+        if (
+            password ===
+            DEMO_ADMIN_PASSWORD
+        ) {
+
+            error.textContent = "";
+
+            document
+                .getElementById("adminPassword")
+                .value = "";
+
+            loadDashboard();
+
+            showScreen("adminDashboard");
+
+        }
+
+        else {
+
+            error.textContent =
+                "Incorrect admin password.";
+
+        }
+
+    }
+
+
+    function adminLogout() {
+
+        showScreen("home");
+
+    }
+
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    function loadDashboard() {
+
+        const table =
+            document
+                .getElementById("dashboardTable");
+
+
+        const records =
+            JSON.parse(
+                localStorage.getItem(
+                    "cyberHygieneRecords"
+                )
+            ) || [];
+
+
+        table.innerHTML = "";
+
+
+        if (records.length === 0) {
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty">
+
+                        No assessment records available.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        records
+            .slice()
+            .reverse()
+            .forEach(record => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${escapeHTML(record.name)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(record.role)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(record.phone)}
+                    </td>
+
+                    <td>
+                        ${record.score}/${record.total}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(record.date)}
+                    </td>
+
+                `;
+
+
+                table.appendChild(row);
+
+            });
+
+    }
+
+
+    function clearRecords() {
+
+        const confirmDelete =
+            confirm(
+                "Are you sure you want to delete all records?"
+            );
+
+
+        if (!confirmDelete) {
+
+            return;
+
+        }
+
+
+        localStorage.removeItem(
+            "cyberHygieneRecords"
+        );
+
+
+        loadDashboard();
+
+    }
+
+
+    /* =========================
+       RESTART
+    ========================= */
+
+    function restartAssessment() {
+
+        selectedRole = "";
+
+        passwordScore = 0;
+
+
+        document
+            .getElementById("username")
+            .value = "";
+
+
+        document
+            .getElementById("password")
+            .value = "";
+
+
+        document
+            .getElementById("phone")
+            .value = "";
+
+
+        document
+            .getElementById("progressBar")
+            .style
+            .width = "0%";
+
+
+        document
+            .getElementById("strengthResult")
+            .textContent =
+            "Enter password to test...";
+
+
+        document
+            .getElementById("spamResult")
+            .classList
+            .add("hidden");
+
+
+        document
+            .getElementById("questions")
+            .innerHTML = "";
+
+
+        showScreen("home");
+
+    }
+
+
+    /* =========================
+       HTML ESCAPE
+    ========================= */
+
+    function escapeHTML(value) {
+
+        const div =
+            document.createElement("div");
+
+
+        div.textContent =
+            value || "";
+
+
+        return div.innerHTML;
+
+    }
+
+</script>
 
 </body>
 </html>
