@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cyber Hygiene Portal</title>
-    <link rel="stylesheet" href="style.css">
     
-    <!-- Core Firebase SDKs loaded securely -->
+    <!-- 1. Firebase Core Libraries Loaded Directly Inside Head -->
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
 </head>
@@ -15,7 +14,7 @@
     <!-- MAIN APP CONTAINER -->
     <div class="app-card">
         
-        <!-- SCREEN 1: ROLE SELECTION & ADMIN LOGIN -->
+        <!-- SCREEN 1: ROLE SELECTION -->
         <div id="role-screen" class="screen">
             <h1 class="main-title">Cyber Hygiene Assessment</h1>
             <p class="subtitle">Welcome! Please select your role to check your secure presence.</p>
@@ -30,7 +29,7 @@
             </div>
         </div>
 
-        <!-- SCREEN 2: PROFILE SETUP (NAME ONLY) -->
+        <!-- SCREEN 2: PROFILE SETUP (ONLY NAME) -->
         <div id="profile-screen" class="screen hidden">
             <div class="screen-header">
                 <h2>Step 1: Profile Setup</h2>
@@ -70,7 +69,7 @@
             <button onclick="nextToQuiz()" class="btn btn-gradient">Next: Start Quiz 🧠</button>
         </div>
 
-        <!-- SCREEN 5: ALL 15 QUIZ QUESTIONS ON ONE PAGE (Scrollable) -->
+        <!-- SCREEN 5: ALL 15 QUIZ QUESTIONS ON ONE PAGE -->
         <div id="quiz-screen" class="screen hidden" style="max-height: 70vh; overflow-y: auto; padding-right: 5px;">
             <div class="screen-header" style="position: sticky; top: 0; background: #1e293b; padding-top: 5px; z-index: 10;">
                 <h2>Step 4: Awareness Test</h2>
@@ -107,17 +106,49 @@
                             <th>Score</th>
                         </tr>
                     </thead>
-                    <tbody id="dashboard-rows">
-                        <!-- Responses saved permanently in firestore will render here -->
-                    </tbody>
+                    <tbody id="dashboard-rows"></tbody>
                 </table>
             </div>
         </div>
 
     </div>
 
-    <!-- Scripts linked in correct sequence to prevent CORS freeze -->
-    <script src="firebase-config.js"></script>
-    <script src="app.js"></script>
-</body>
-</html>
+    <!-- 🧠 IN-BUILT JAVASCRIPT & DATABASE ENGINE -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCUfGLL3aNrcc8gpikhMFhiJJ7BDSWEKvY",
+            authDomain: "://firebaseapp.com",
+            projectId: "cyberhygieneapp-80d86",
+            storageBucket: "cyberhygieneapp-80d86.firebasestorage.app",
+            messagingSenderId: "419036618237",
+            appId: "1:419036618237:web:a2796ae36fdc9eeea64d94"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let userData = { name: "", role: "", passwordStrength: "Weak", spamNumber: "None", score: 0 };
+        const quizQuestions = [
+            { q: "What is the best practice for creating a strong password?", o: ["Using your birthdate", "Mixing uppercase, lowercase, numbers, and symbols", "Reusing your email password", "Keeping it short"], a: 1 },
+            { q: "What does Two-Factor Authentication (2FA) do?", o: ["Asks for password twice", "Adds a second layer of security via OTP/App", "Speeds up login process", "Deletes data automatically"], a: 1 },
+            { q: "You receive an urgent email from your bank asking for UPI PIN. What should you do?", o: ["Reply with the PIN immediately", "Ignore and delete the email", "Forward to friends", "Call the sender back"], a: 1 },
+            { q: "Which network is safest for online banking?", o: ["Public Railway Wi-Fi", "Mall Free Wi-Fi", "Secured Home Wi-Fi / Mobile Data", "Any Open Network"], a: 2 },
+            { q: "What is 'Phishing'?", o: ["A type of cyber attack to steal sensitive data", "Catching fish online", "Updating OS software", "Speeding up internet connection"], a: 0 },
+            { q: "How often should you update your smartphone operating system?", o: ["Never", "Only when it stops working", "As soon as updates are available", "Once every two years"], a: 2 },
+            { q: "What should you check before entering sensitive info on a website?", o: ["The website color", "If the URL starts with 'https://' and has a lock icon", "The number of images", "If it loads fast"], a: 1 },
+            { q: "What is the risk of using public USB charging stations?", o: ["Slow charging speed", "Juice Jacking (Data theft/Malware installation)", "Phone battery blast", "No risk at all"], a: 1 },
+            { q: "If you back up your files to the cloud, you are protecting against:", o: ["Screen damage", "Data loss from ransomware or hardware failure", "High internet bills", "Spam phone calls"], a: 1 },
+            { q: "What is a 'Trojan Horse' in cyber security?", o: ["A strong virus scanner", "Malicious software disguised as legitimate software", "A hardware component", "A secure network cable"], a: 1 },
+            { q: "When sharing photos on social media, what hidden data can pose a privacy risk?", o: ["File size", "Image resolution", "EXIF data (including GPS location)", "Color scheme"], a: 2 },
+            { q: "What is the safest way to dispose of an old hard drive?", o: ["Throwing it in the trash bin", "Physically destroying it or using data wiping software", "Deleting all folders", "Formatting it quickly once"], a: 1 },
+            { q: "Which of the following indicates a potential spam/phishing SMS?", o: ["A message from a known friend", "An OTP you requested", "Urgent warnings with suspicious short links claiming you won a lottery", "A monthly electricity bill notification"], a: 2 },
+            { q: "What does a Firewall do?", o: ["Cools down the computer processor", "Monitors and filters incoming and outgoing network traffic", "Increases internet downloading speed", "Deletes old files"], a: 1 },
+            { q: "Why should you avoid using the same password for all accounts?", o: ["It is hard to type", "If one account is breached, hackers can access all your accounts", "Websites do not allow it", "It slows down the login process"], a: 1 }
+        ];
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function selectRole(role) {
